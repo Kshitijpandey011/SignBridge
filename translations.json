@@ -1,0 +1,158 @@
+{
+  "concepts": {
+    "hello": {
+      "en": "Hello",
+      "hi": {"text": "नमस्ते", "needs_review": true},
+      "ta": {"text": "வணக்கம்", "needs_review": true},
+      "es": {"text": "Hola", "needs_review": true}
+    },
+    "thank_you": {
+      "en": "Thank you",
+      "hi": {"text": "धन्यवाद", "needs_review": true},
+      "ta": {"text": "நன்றி", "needs_review": true},
+      "es": {"text": "Gracias", "needs_review": true}
+    },
+    "please": {
+      "en": "Please",
+      "hi": {"text": "कृपया", "needs_review": true},
+      "ta": {"text": "தயவுசெய்து", "needs_review": true},
+      "es": {"text": "Por favor", "needs_review": true}
+    },
+    "sorry": {
+      "en": "Sorry",
+      "hi": {"text": "माफ़ कीजिए", "needs_review": true},
+      "ta": {"text": "மன்னிக்கவும்", "needs_review": true},
+      "es": {"text": "Lo siento", "needs_review": true}
+    },
+    "pain": {
+      "en": "Pain",
+      "hi": {"text": "दर्द", "needs_review": true},
+      "ta": {"text": "வலி", "needs_review": true},
+      "es": {"text": "Dolor", "needs_review": true}
+    },
+    "no": {
+      "en": "No",
+      "hi": {"text": "नहीं", "needs_review": true},
+      "ta": {"text": "இல்லை", "needs_review": true},
+      "es": {"text": "No", "needs_review": true}
+    },
+    "yes": {
+      "en": "Yes",
+      "hi": {"text": "हाँ", "needs_review": true},
+      "ta": {"text": "ஆம்", "needs_review": true},
+      "es": {"text": "Sí", "needs_review": true}
+    },
+    "help": {
+      "en": "Help",
+      "hi": {"text": "मदद", "needs_review": true},
+      "ta": {"text": "உதவி", "needs_review": true},
+      "es": {"text": "Ayuda", "needs_review": true}
+    },
+    "water": {
+      "en": "Water",
+      "hi": {"text": "पानी", "needs_review": true},
+      "ta": {"text": "தண்ணீர்", "needs_review": true},
+      "es": {"text": "Agua", "needs_review": true}
+    },
+    "food": {
+      "en": "Food",
+      "hi": {"text": "खाना", "needs_review": true},
+      "ta": {"text": "உணவு", "needs_review": true},
+      "es": {"text": "Comida", "needs_review": true}
+    },
+    "medicine": {
+      "en": "Medicine",
+      "hi": {"text": "दवा", "needs_review": true},
+      "ta": {"text": "மருந்து", "needs_review": true},
+      "es": {"text": "Medicina", "needs_review": true}
+    },
+    "doctor": {
+      "en": "Doctor",
+      "hi": {"text": "डॉक्टर", "needs_review": true},
+      "ta": {"text": "மருத்துவர்", "needs_review": true},
+      "es": {"text": "Médico", "needs_review": true}
+    },
+    "family": {
+      "en": "Family",
+      "hi": {"text": "परिवार", "needs_review": true},
+      "ta": {"text": "குடும்பம்", "needs_review": true},
+      "es": {"text": "Familia", "needs_review": true}
+    },
+    "work": {
+      "en": "Work",
+      "hi": {"text": "काम", "needs_review": true},
+      "ta": {"text": "வேலை", "needs_review": true},
+      "es": {"text": "Trabajo", "needs_review": true}
+    },
+    "school": {
+      "en": "School",
+      "hi": {"text": "स्कूल", "needs_review": true},
+      "ta": {"text": "பள்ளி", "needs_review": true},
+      "es": {"text": "Escuela", "needs_review": true}
+    },
+    "home": {
+      "en": "Home",
+      "hi": {"text": "घर", "needs_review": true},
+      "ta": {"text": "வீடு", "needs_review": true},
+      "es": {"text": "Casa", "needs_review": true}
+    },
+    "money": {
+      "en": "Money",
+      "hi": {"text": "पैसा", "needs_review": true},
+      "ta": {"text": "பணம்", "needs_review": true},
+      "es": {"text": "Dinero", "needs_review": true}
+    },
+    "phone": {
+      "en": "Phone",
+      "hi": {"text": "फ़ोन", "needs_review": true},
+      "ta": {"text": "தொலைபேசி", "needs_review": true},
+      "es": {"text": "Teléfono", "needs_review": true}
+    },
+    "happy": {
+      "en": "Happy",
+      "hi": {"text": "ख़ुश", "needs_review": true},
+      "ta": {"text": "மகிழ்ச்சி", "needs_review": true},
+      "es": {"text": "Feliz", "needs_review": true}
+    },
+    "sad": {
+      "en": "Sad",
+      "hi": {"text": "उदास", "needs_review": true},
+      "ta": {"text": "சோகம்", "needs_review": true},
+      "es": {"text": "Triste", "needs_review": true}
+    }
+  },
+  "phrases": {
+    "help+water": {
+      "en": "I need help. I need water.",
+      "hi": {"text": "मुझे मदद चाहिए। मुझे पानी चाहिए।", "needs_review": true},
+      "ta": {"text": "எனக்கு உதவி வேண்டும். எனக்கு தண்ணீர் வேண்டும்.", "needs_review": true},
+      "es": {"text": "Necesito ayuda. Necesito agua.", "needs_review": true}
+    },
+    "pain+doctor": {
+      "en": "I am in pain. I need a doctor.",
+      "hi": {"text": "मुझे दर्द हो रहा है। मुझे डॉक्टर की ज़रूरत है।", "needs_review": true},
+      "ta": {"text": "எனக்கு வலிக்கிறது. எனக்கு மருத்துவர் தேவை.", "needs_review": true},
+      "es": {"text": "Tengo dolor. Necesito un médico.", "needs_review": true}
+    },
+    "medicine+please": {
+      "en": "Medicine, please.",
+      "hi": {"text": "दवा दीजिए, कृपया।", "needs_review": true},
+      "ta": {"text": "மருந்து வேண்டும், தயவுசெய்து.", "needs_review": true},
+      "es": {"text": "Medicina, por favor.", "needs_review": true}
+    },
+    "thank_you": {
+      "en": "Thank you.",
+      "hi": {"text": "धन्यवाद।", "needs_review": true},
+      "ta": {"text": "நன்றி.", "needs_review": true},
+      "es": {"text": "Muchas gracias.", "needs_review": true}
+    }
+  },
+  "templates": {
+    "need": {
+      "en": "I need {x}.",
+      "hi": {"text": "मुझे {x} चाहिए।", "needs_review": true},
+      "ta": {"text": "எனக்கு {x} வேண்டும்.", "needs_review": true},
+      "es": {"text": "Necesito {x}.", "needs_review": true}
+    }
+  }
+}

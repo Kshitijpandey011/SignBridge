@@ -1,0 +1,22 @@
+{
+  "phrases": {
+    "help+water": "I need help. I need water.",
+    "pain+doctor": "I am in pain. I need a doctor.",
+    "medicine+please": "Medicine, please.",
+    "thank_you": "Thank you.",
+    "hello": "Hello, how are you?",
+    "yes": "Yes, I understand.",
+    "no": "No, thank you.",
+    "food+water": "I need food and water.",
+    "home+family": "I want to go home to my family.",
+    "doctor+medicine": "I need to see a doctor for medicine.",
+    "help+pain": "Please help, I am in pain.",
+    "phone+work": "I need to make a phone call for work.",
+    "school+happy": "I am happy to be at school."
+  },
+  "templates": {
+    "need": "I need {0}.",
+    "please": "{0}, please.",
+    "and": "{0} and {1}."
+  }
+}

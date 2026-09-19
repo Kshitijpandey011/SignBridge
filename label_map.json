@@ -1,0 +1,242 @@
+{
+  "0": {
+    "lang": "isl",
+    "concept": "hello",
+    "text": "Hello",
+    "class_name": "isl_hello"
+  },
+  "1": {
+    "lang": "isl",
+    "concept": "thank_you",
+    "text": "Thank you",
+    "class_name": "isl_thank_you"
+  },
+  "2": {
+    "lang": "isl",
+    "concept": "please",
+    "text": "Please",
+    "class_name": "isl_please"
+  },
+  "3": {
+    "lang": "isl",
+    "concept": "sorry",
+    "text": "Sorry",
+    "class_name": "isl_sorry"
+  },
+  "4": {
+    "lang": "isl",
+    "concept": "pain",
+    "text": "Pain",
+    "class_name": "isl_pain"
+  },
+  "5": {
+    "lang": "isl",
+    "concept": "no",
+    "text": "No",
+    "class_name": "isl_no"
+  },
+  "6": {
+    "lang": "isl",
+    "concept": "yes",
+    "text": "Yes",
+    "class_name": "isl_yes"
+  },
+  "7": {
+    "lang": "isl",
+    "concept": "help",
+    "text": "Help",
+    "class_name": "isl_help"
+  },
+  "8": {
+    "lang": "isl",
+    "concept": "water",
+    "text": "Water",
+    "class_name": "isl_water"
+  },
+  "9": {
+    "lang": "isl",
+    "concept": "food",
+    "text": "Food",
+    "class_name": "isl_food"
+  },
+  "10": {
+    "lang": "isl",
+    "concept": "medicine",
+    "text": "Medicine",
+    "class_name": "isl_medicine"
+  },
+  "11": {
+    "lang": "isl",
+    "concept": "doctor",
+    "text": "Doctor",
+    "class_name": "isl_doctor"
+  },
+  "12": {
+    "lang": "isl",
+    "concept": "family",
+    "text": "Family",
+    "class_name": "isl_family"
+  },
+  "13": {
+    "lang": "isl",
+    "concept": "work",
+    "text": "Work",
+    "class_name": "isl_work"
+  },
+  "14": {
+    "lang": "isl",
+    "concept": "school",
+    "text": "School",
+    "class_name": "isl_school"
+  },
+  "15": {
+    "lang": "isl",
+    "concept": "home",
+    "text": "Home",
+    "class_name": "isl_home"
+  },
+  "16": {
+    "lang": "isl",
+    "concept": "money",
+    "text": "Money",
+    "class_name": "isl_money"
+  },
+  "17": {
+    "lang": "isl",
+    "concept": "phone",
+    "text": "Phone",
+    "class_name": "isl_phone"
+  },
+  "18": {
+    "lang": "isl",
+    "concept": "happy",
+    "text": "Happy",
+    "class_name": "isl_happy"
+  },
+  "19": {
+    "lang": "isl",
+    "concept": "sad",
+    "text": "Sad",
+    "class_name": "isl_sad"
+  },
+  "20": {
+    "lang": "asl",
+    "concept": "hello",
+    "text": "Hello",
+    "class_name": "asl_hello"
+  },
+  "21": {
+    "lang": "asl",
+    "concept": "thank_you",
+    "text": "Thank you",
+    "class_name": "asl_thank_you"
+  },
+  "22": {
+    "lang": "asl",
+    "concept": "please",
+    "text": "Please",
+    "class_name": "asl_please"
+  },
+  "23": {
+    "lang": "asl",
+    "concept": "sorry",
+    "text": "Sorry",
+    "class_name": "asl_sorry"
+  },
+  "24": {
+    "lang": "asl",
+    "concept": "pain",
+    "text": "Pain",
+    "class_name": "asl_pain"
+  },
+  "25": {
+    "lang": "asl",
+    "concept": "no",
+    "text": "No",
+    "class_name": "asl_no"
+  },
+  "26": {
+    "lang": "asl",
+    "concept": "yes",
+    "text": "Yes",
+    "class_name": "asl_yes"
+  },
+  "27": {
+    "lang": "asl",
+    "concept": "help",
+    "text": "Help",
+    "class_name": "asl_help"
+  },
+  "28": {
+    "lang": "asl",
+    "concept": "water",
+    "text": "Water",
+    "class_name": "asl_water"
+  },
+  "29": {
+    "lang": "asl",
+    "concept": "food",
+    "text": "Food",
+    "class_name": "asl_food"
+  },
+  "30": {
+    "lang": "asl",
+    "concept": "medicine",
+    "text": "Medicine",
+    "class_name": "asl_medicine"
+  },
+  "31": {
+    "lang": "asl",
+    "concept": "doctor",
+    "text": "Doctor",
+    "class_name": "asl_doctor"
+  },
+  "32": {
+    "lang": "asl",
+    "concept": "family",
+    "text": "Family",
+    "class_name": "asl_family"
+  },
+  "33": {
+    "lang": "asl",
+    "concept": "work",
+    "text": "Work",
+    "class_name": "asl_work"
+  },
+  "34": {
+    "lang": "asl",
+    "concept": "school",
+    "text": "School",
+    "class_name": "asl_school"
+  },
+  "35": {
+    "lang": "asl",
+    "concept": "home",
+    "text": "Home",
+    "class_name": "asl_home"
+  },
+  "36": {
+    "lang": "asl",
+    "concept": "money",
+    "text": "Money",
+    "class_name": "asl_money"
+  },
+  "37": {
+    "lang": "asl",
+    "concept": "phone",
+    "text": "Phone",
+    "class_name": "asl_phone"
+  },
+  "38": {
+    "lang": "asl",
+    "concept": "happy",
+    "text": "Happy",
+    "class_name": "asl_happy"
+  },
+  "39": {
+    "lang": "asl",
+    "concept": "sad",
+    "text": "Sad",
+    "class_name": "asl_sad"
+  }
+}
