@@ -14,10 +14,10 @@ import numpy as np
 
 from src.features.normalize import (
     FEATURE_DIM,
-    HAND_DIM,
     POSE_DIM,
     compute_motion_energy,
 )
+from src.label_map import DEFAULT_REGISTRY, LabelRegistry
 
 
 class PredictionStabilizer:
@@ -25,17 +25,21 @@ class PredictionStabilizer:
 
     def __init__(
         self,
-        voting_window: int = 10,
-        fixed_mode_threshold: float = 0.90,
-        auto_mode_threshold: float = 0.80,
-        motion_energy_threshold: float = 0.08,
-        cooldown_seconds: float = 1.0,
+        voting_window: int = 5,
+        fixed_mode_threshold: float = 0.15,
+        auto_mode_threshold: float = 0.12,
+        margin_threshold: float = 0.025,
+        motion_energy_threshold: float = 0.0,
+        cooldown_seconds: float = 1.2,
+        label_registry: Optional[LabelRegistry] = None,
     ) -> None:
         self.voting_window = voting_window
         self.fixed_mode_threshold = fixed_mode_threshold
         self.auto_mode_threshold = auto_mode_threshold
+        self.margin_threshold = margin_threshold
         self.motion_energy_threshold = motion_energy_threshold
         self.cooldown_seconds = cooldown_seconds
+        self.registry = label_registry or DEFAULT_REGISTRY
 
         self._prediction_history: Deque[Tuple[int, float]] = deque(maxlen=voting_window)
         self._prev_frame_features: Optional[np.ndarray] = None
@@ -75,23 +79,36 @@ class PredictionStabilizer:
             self._prev_frame_features = frame_features
             return None
 
-        # 2. Motion Energy Rejection: Emit nothing if movement is below stillness floor
-        if self._prev_frame_features is not None:
+        # 2. Motion Energy Rejection (only active if threshold > 0)
+        if self.motion_energy_threshold > 0 and self._prev_frame_features is not None:
             energy = compute_motion_energy(self._prev_frame_features, frame_features)
             if energy < self.motion_energy_threshold:
-                # Signer is pausing / motionless
                 self._prev_frame_features = frame_features
                 return None
         self._prev_frame_features = frame_features.copy()
 
-        # 3. Top class and confidence check for this single frame
-        top_idx = int(np.argmax(masked_probs))
+        # 3. Top class and confidence margin check for this single frame
+        sorted_indices = np.argsort(masked_probs)[::-1]
+        top_idx = int(sorted_indices[0])
         top_conf = float(masked_probs[top_idx])
+        top_concept = self.registry.concept_of.get(top_idx, "")
+
+        # Find the highest confidence of a DIFFERENT concept to check rejection margin
+        second_diff_conf = 0.0
+        for idx in sorted_indices[1:]:
+            if self.registry.concept_of.get(int(idx), "") != top_concept:
+                second_diff_conf = float(masked_probs[idx])
+                break
+
         threshold = self.auto_mode_threshold if mode == "auto" else self.fixed_mode_threshold
+
+        # Require top candidate to have a clear margin over competing concepts
+        if (top_conf - second_diff_conf) < self.margin_threshold:
+            return None
 
         self._prediction_history.append((top_idx, top_conf))
 
-        # Check voting window
+        # Check voting window: need at least voting_window predictions
         if len(self._prediction_history) < self.voting_window:
             return None
 
@@ -100,8 +117,9 @@ class PredictionStabilizer:
         counts = Counter(classes)
         majority_class, count = counts.most_common(1)[0]
 
-        # Require majority agreement (e.g. >= 7 out of 10)
-        if count < int(self.voting_window * 0.7):
+        # Require majority agreement (e.g. >= 3 out of 5)
+        min_agreement = max(3, int(self.voting_window * 0.6))
+        if count < min_agreement:
             return None
 
         # Calculate average confidence for majority class

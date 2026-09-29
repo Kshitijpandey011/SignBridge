@@ -84,5 +84,9 @@ def run_checks():
 
     print("\nALL SYSTEM INTEGRATION CHECKS PASSED PERFECTLY!")
 
+def test_system_integration():
+    run_checks()
+
 if __name__ == "__main__":
     run_checks()
+

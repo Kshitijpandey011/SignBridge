@@ -7,7 +7,6 @@ Used identically in dataset recording and real-time model inference.
 from __future__ import annotations
 
 from collections import deque
-from typing import Optional
 
 import numpy as np
 

@@ -40,3 +40,5 @@ models/
 eval_report.json
 confusion_matrix.png
 voices_available.json
+.pytest_cache/
+scratch/

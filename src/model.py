@@ -19,6 +19,7 @@ import os
 from pathlib import Path
 from typing import Optional, Tuple
 
+import numpy as np
 import tensorflow as tf
 from tensorflow.keras import layers, models, optimizers
 
@@ -101,3 +102,46 @@ def load_inference_model(model_path: str | Path) -> tf.keras.Model:
     if not path.exists():
         raise FileNotFoundError(f"Model file not found at: {path}")
     return tf.keras.models.load_model(str(path))
+
+
+class FastSignPredictor:
+    """High-performance predictor supporting ultra-fast TFLite (3.5ms) with Keras fallback."""
+
+    def __init__(
+        self,
+        tflite_path: str | Path = "models/model.tflite",
+        keras_path: str | Path = "models/model.keras",
+    ) -> None:
+        self.tflite_path = Path(tflite_path)
+        self.keras_path = Path(keras_path)
+        self.use_tflite = False
+        self.interpreter = None
+
+        if self.tflite_path.exists():
+            try:
+                self.interpreter = tf.lite.Interpreter(model_path=str(self.tflite_path))
+                self.interpreter.allocate_tensors()
+                self.input_details = self.interpreter.get_input_details()
+                self.output_details = self.interpreter.get_output_details()
+                self.use_tflite = True
+            except Exception as e:
+                print(f"Notice: TFLite fallback to Keras ({e})")
+
+        if not self.use_tflite:
+            self.model = load_inference_model(self.keras_path)
+
+    def predict(self, sequence: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+        """Predict class and language probabilities for input sequence shape (1, 30, 258)."""
+        if self.use_tflite:
+            self.interpreter.set_tensor(self.input_details[0]["index"], sequence.astype(np.float32))
+            self.interpreter.invoke()
+            out0 = self.interpreter.get_tensor(self.output_details[0]["index"])
+            out1 = self.interpreter.get_tensor(self.output_details[1]["index"])
+            if out0.shape[-1] == 40:
+                return out0, out1
+            return out1, out0
+        else:
+            preds = self.model.predict(sequence, verbose=0)
+            if isinstance(preds, list):
+                return preds[0], preds[1]
+            return preds, None

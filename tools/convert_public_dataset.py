@@ -138,18 +138,89 @@ def parse_asl_citizen_layout(source_dir: Path) -> List[Tuple[Path, str, str, str
     return items
 
 
+def parse_raw_videos_layout(source_dir: Path) -> List[Tuple[Path, str, str, str, str]]:
+    """Parse raw_videos/<lang>/<concept>/<clip>.mp4 directory convention."""
+    items = []
+    for ext in ("*.mp4", "*.avi", "*.mov", "*.mkv"):
+        for video_path in source_dir.rglob(ext):
+            concept = video_path.parent.name.lower().replace(" ", "_")
+            lang = video_path.parent.parent.name.lower()
+            if lang not in ("isl", "asl"):
+                continue
+            signer_id = video_path.stem.split("_")[0] if "_" in video_path.stem else "public_clip"
+            items.append((video_path, concept, signer_id, "raw_clip", lang))
+    return items
+
+
 def convert_dataset(
     source_dir: Path,
-    source_format: str,
-    target_lang: str,
-    output_dir: Path,
+    source_format: str = "auto",
+    target_lang: Optional[str] = None,
+    output_dir: Path = Path("data"),
     allowed_concepts: Optional[List[str]] = None,
     index_json: Optional[Path] = None,
 ) -> int:
     """Batch convert external dataset into canonical data/ directory structure."""
     source_format = source_format.lower()
-    target_lang = target_lang.lower()
 
+    if source_format in ("auto", "raw_videos"):
+        if not source_dir.exists():
+            print(f"Source directory does not exist: {source_dir}")
+            return 0
+        raw_entries = parse_raw_videos_layout(source_dir)
+        # Filter concepts
+        filtered_raw = []
+        for v_path, concept, signer_id, src, lang in raw_entries:
+            if target_lang and lang != target_lang.lower():
+                continue
+            if allowed_concepts and concept not in allowed_concepts:
+                continue
+            filtered_raw.append((v_path, concept, signer_id, src, lang))
+
+        print(f"Found {len(filtered_raw)} matching raw videos in {source_dir} for conversion.")
+        if not filtered_raw:
+            return 0
+
+        holistic = init_holistic(static_image_mode=False)
+        converted_count = 0
+        try:
+            for v_path, concept, signer_id, src, lang in tqdm(filtered_raw, desc="Converting raw videos"):
+                dest_dir = output_dir / lang / concept / signer_id
+                dest_dir.mkdir(parents=True, exist_ok=True)
+
+                seq_id = f"conv_{src}_{v_path.stem}"
+                npy_path = dest_dir / f"{seq_id}.npy"
+                json_path = dest_dir / f"{seq_id}.json"
+
+                if npy_path.exists():
+                    continue
+
+                try:
+                    seq_data = process_video_to_sequence(v_path, holistic)
+                    np.save(npy_path, seq_data)
+
+                    meta = {
+                        "lang": lang,
+                        "concept": concept,
+                        "signer_id": signer_id,
+                        "source": src,
+                        "original_video": str(v_path),
+                        "frames": SEQUENCE_LENGTH,
+                        "features": FEATURE_DIM,
+                    }
+                    with open(json_path, "w", encoding="utf-8") as f:
+                        json.dump(meta, f, indent=2)
+
+                    converted_count += 1
+                except Exception as e:
+                    print(f"Warning: Failed to convert {v_path}: {e}")
+        finally:
+            holistic.close()
+
+        print(f"Successfully converted {converted_count} video sequences.")
+        return converted_count
+
+    target_lang = (target_lang or "asl").lower()
     if source_format == "include":
         entries = parse_include_layout(source_dir)
     elif source_format == "wlasl":
@@ -213,20 +284,20 @@ def convert_dataset(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Convert external video datasets to canonical 30-frame npy sequences")
-    parser.add_argument("--source-dir", type=str, required=True, help="Input directory containing raw dataset videos")
+    parser.add_argument("--source-dir", type=str, default="raw_videos", help="Input directory containing raw dataset videos (default: raw_videos)")
     parser.add_argument(
         "--source-format",
         type=str,
-        choices=["include", "wlasl", "asl_citizen"],
-        required=True,
-        help="Format layout of source dataset",
+        choices=["auto", "raw_videos", "include", "wlasl", "asl_citizen"],
+        default="auto",
+        help="Format layout of source dataset (default: auto)",
     )
     parser.add_argument(
         "--lang",
         type=str,
         choices=["isl", "asl"],
-        required=True,
-        help="Target sign language tag (isl for INCLUDE, asl for WLASL/ASL Citizen)",
+        default=None,
+        help="Target sign language tag (optional for auto/raw_videos, required for external single-format dirs)",
     )
     parser.add_argument("--output-dir", type=str, default="data", help="Output directory root (default: data)")
     parser.add_argument("--index-json", type=str, default=None, help="Optional index JSON file (e.g. WLASL_v0.3.json)")

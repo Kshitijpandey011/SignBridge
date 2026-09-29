@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Dict, List, Optional, Sequence, Set, Tuple
+from typing import Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 
@@ -19,7 +19,6 @@ from src.label_map import (
     CANONICAL_CONCEPTS,
     DEFAULT_REGISTRY,
     LabelRegistry,
-    build_label_map,
 )
 
 SEQUENCE_LENGTH: int = 30

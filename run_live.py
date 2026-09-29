@@ -27,6 +27,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from src.features.buffer import SequenceBuffer
 from src.features.normalize import (
     draw_styled_landmarks,
+    draw_unicode_text,
     extract_and_normalize_landmarks,
     init_holistic,
 )
@@ -106,21 +107,21 @@ def run_live_inference(
             if not ret:
                 break
 
-            frame = cv2.flip(frame, 1)
-            h, w, _ = frame.shape
-
-            # Calculate FPS
-            curr_time = time.time()
-            fps = 1.0 / (curr_time - prev_time) if (curr_time - prev_time) > 0 else 30.0
-            prev_time = curr_time
-
-            # MediaPipe extraction
+            # MediaPipe extraction on raw frame for anatomically correct hand chirality
             rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             rgb.flags.writeable = False
             results = holistic.process(rgb)
             rgb.flags.writeable = True
 
             annotated = draw_styled_landmarks(frame, results)
+            annotated = cv2.flip(annotated, 1)
+            h, w, _ = annotated.shape
+
+            # Calculate FPS
+            curr_time = time.time()
+            fps = 1.0 / (curr_time - prev_time) if (curr_time - prev_time) > 0 else 30.0
+            prev_time = curr_time
+
             feature_vector = extract_and_normalize_landmarks(results)
             buffer.append(feature_vector)
 
@@ -189,14 +190,13 @@ def run_live_inference(
 
             if last_hud_translation:
                 tag_color = (0, 255, 0) if "curated" in last_hud_tag else (0, 165, 255)
-                cv2.putText(
+                annotated = draw_unicode_text(
                     annotated,
                     f"Translated [{last_hud_tag}]: {last_hud_translation}",
-                    (30, h - 55),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    0.8,
-                    tag_color,
-                    2,
+                    (30, h - 75),
+                    color=tag_color,
+                    font_size=20,
+                    is_bgr=True,
                 )
 
             # Text Log in Top Right

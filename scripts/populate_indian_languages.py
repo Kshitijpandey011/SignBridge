@@ -1,0 +1,422 @@
+"""Populate translations.json with all major Indian languages and pre-cache their offline audio files."""
+
+import json
+import os
+import sys
+import time
+import urllib.parse
+import urllib.request
+from pathlib import Path
+
+false = False
+true = True
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+INDIAN_CONCEPTS = {
+    "hello": {
+        "en": "Hello",
+        "hi": {"text": "नमस्ते", "needs_review": false},
+        "ta": {"text": "வணக்கம்", "needs_review": false},
+        "te": {"text": "నమస్కారం", "needs_review": false},
+        "bn": {"text": "নমস্কার", "needs_review": false},
+        "mr": {"text": "नमस्कार", "needs_review": false},
+        "gu": {"text": "નમસ્તે", "needs_review": false},
+        "kn": {"text": "ನಮಸ್ಕಾರ", "needs_review": false},
+        "ml": {"text": "നമസ്കാരം", "needs_review": false},
+        "pa": {"text": "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ", "needs_review": false},
+        "ur": {"text": "سلام", "needs_review": false},
+    },
+    "thank_you": {
+        "en": "Thank you",
+        "hi": {"text": "धन्यवाद", "needs_review": false},
+        "ta": {"text": "நன்றி", "needs_review": false},
+        "te": {"text": "ధన్యవాదాలు", "needs_review": false},
+        "bn": {"text": "ধন্যবাদ", "needs_review": false},
+        "mr": {"text": "धन्यवाद", "needs_review": false},
+        "gu": {"text": "આભાર", "needs_review": false},
+        "kn": {"text": "ಧನ್ಯವಾದಗಳು", "needs_review": false},
+        "ml": {"text": "നന്ദി", "needs_review": false},
+        "pa": {"text": "ਧੰਨਵਾਦ", "needs_review": false},
+        "ur": {"text": "شکریہ", "needs_review": false},
+    },
+    "please": {
+        "en": "Please",
+        "hi": {"text": "कृपया", "needs_review": false},
+        "ta": {"text": "தயவுசெய்து", "needs_review": false},
+        "te": {"text": "దయచేసి", "needs_review": false},
+        "bn": {"text": "দয়া করে", "needs_review": false},
+        "mr": {"text": "कृपया", "needs_review": false},
+        "gu": {"text": "કૃપા કરીને", "needs_review": false},
+        "kn": {"text": "ದಯವಿಟ್ಟು", "needs_review": false},
+        "ml": {"text": "ദയവായി", "needs_review": false},
+        "pa": {"text": "ਕਿਰਪਾ ਕਰਕੇ", "needs_review": false},
+        "ur": {"text": "براہ مہربانی", "needs_review": false},
+    },
+    "sorry": {
+        "en": "Sorry",
+        "hi": {"text": "माफ़ कीजिए", "needs_review": false},
+        "ta": {"text": "மன்னிக்கவும்", "needs_review": false},
+        "te": {"text": "క్షమించండి", "needs_review": false},
+        "bn": {"text": "দুঃখিত", "needs_review": false},
+        "mr": {"text": "माफ करा", "needs_review": false},
+        "gu": {"text": "માફ કરશો", "needs_review": false},
+        "kn": {"text": "ಕ್ಷಮಿಸಿ", "needs_review": false},
+        "ml": {"text": "ക്ഷമിക്കണം", "needs_review": false},
+        "pa": {"text": "ਮਾਫ਼ ਕਰਨਾ", "needs_review": false},
+        "ur": {"text": "معاف کیجئے", "needs_review": false},
+    },
+    "pain": {
+        "en": "Pain",
+        "hi": {"text": "दर्द", "needs_review": false},
+        "ta": {"text": "வலி", "needs_review": false},
+        "te": {"text": "నొప్పి", "needs_review": false},
+        "bn": {"text": "ব্যথা", "needs_review": false},
+        "mr": {"text": "वेदना", "needs_review": false},
+        "gu": {"text": "દર્દ", "needs_review": false},
+        "kn": {"text": "ನೋವು", "needs_review": false},
+        "ml": {"text": "വേദന", "needs_review": false},
+        "pa": {"text": "ਦਰਦ", "needs_review": false},
+        "ur": {"text": "درد", "needs_review": false},
+    },
+    "no": {
+        "en": "No",
+        "hi": {"text": "नहीं", "needs_review": false},
+        "ta": {"text": "இல்லை", "needs_review": false},
+        "te": {"text": "కాదు", "needs_review": false},
+        "bn": {"text": "না", "needs_review": false},
+        "mr": {"text": "नाही", "needs_review": false},
+        "gu": {"text": "ના", "needs_review": false},
+        "kn": {"text": "ಇಲ್ಲ", "needs_review": false},
+        "ml": {"text": "ഇല്ല", "needs_review": false},
+        "pa": {"text": "ਨਹੀਂ", "needs_review": false},
+        "ur": {"text": "نہیں", "needs_review": false},
+    },
+    "yes": {
+        "en": "Yes",
+        "hi": {"text": "हाँ", "needs_review": false},
+        "ta": {"text": "ஆம்", "needs_review": false},
+        "te": {"text": "అవును", "needs_review": false},
+        "bn": {"text": "হ্যাঁ", "needs_review": false},
+        "mr": {"text": "हो", "needs_review": false},
+        "gu": {"text": "હા", "needs_review": false},
+        "kn": {"text": "ಹೌದು", "needs_review": false},
+        "ml": {"text": "അതേ", "needs_review": false},
+        "pa": {"text": "ਹਾਂ", "needs_review": false},
+        "ur": {"text": "ہاں", "needs_review": false},
+    },
+    "help": {
+        "en": "Help",
+        "hi": {"text": "मदद", "needs_review": false},
+        "ta": {"text": "உதவி", "needs_review": false},
+        "te": {"text": "సహాయం", "needs_review": false},
+        "bn": {"text": "সাহায্য", "needs_review": false},
+        "mr": {"text": "मदत", "needs_review": false},
+        "gu": {"text": "મદદ", "needs_review": false},
+        "kn": {"text": "ಸಹಾಯ", "needs_review": false},
+        "ml": {"text": "സഹായം", "needs_review": false},
+        "pa": {"text": "ਮਦਦ", "needs_review": false},
+        "ur": {"text": "مدد", "needs_review": false},
+    },
+    "water": {
+        "en": "Water",
+        "hi": {"text": "पानी", "needs_review": false},
+        "ta": {"text": "தண்ணீர்", "needs_review": false},
+        "te": {"text": "నీరు", "needs_review": false},
+        "bn": {"text": "জল", "needs_review": false},
+        "mr": {"text": "पाणी", "needs_review": false},
+        "gu": {"text": "પાણી", "needs_review": false},
+        "kn": {"text": "ನೀರು", "needs_review": false},
+        "ml": {"text": "വെള്ളം", "needs_review": false},
+        "pa": {"text": "ਪਾਣੀ", "needs_review": false},
+        "ur": {"text": "پانی", "needs_review": false},
+    },
+    "food": {
+        "en": "Food",
+        "hi": {"text": "खाना", "needs_review": false},
+        "ta": {"text": "உணவு", "needs_review": false},
+        "te": {"text": "ఆహారం", "needs_review": false},
+        "bn": {"text": "খাবার", "needs_review": false},
+        "mr": {"text": "जेवण", "needs_review": false},
+        "gu": {"text": "ખોરાક", "needs_review": false},
+        "kn": {"text": "ಆಹಾರ", "needs_review": false},
+        "ml": {"text": "ഭക്ഷണം", "needs_review": false},
+        "pa": {"text": "ਖਾਣਾ", "needs_review": false},
+        "ur": {"text": "کھانا", "needs_review": false},
+    },
+    "medicine": {
+        "en": "Medicine",
+        "hi": {"text": "दवा", "needs_review": false},
+        "ta": {"text": "மருந்து", "needs_review": false},
+        "te": {"text": "మందు", "needs_review": false},
+        "bn": {"text": "ওষুধ", "needs_review": false},
+        "mr": {"text": "औषध", "needs_review": false},
+        "gu": {"text": "દવા", "needs_review": false},
+        "kn": {"text": "ಔಷಧಿ", "needs_review": false},
+        "ml": {"text": "മരുന്ന്", "needs_review": false},
+        "pa": {"text": "ਦਵਾਈ", "needs_review": false},
+        "ur": {"text": "دوا", "needs_review": false},
+    },
+    "doctor": {
+        "en": "Doctor",
+        "hi": {"text": "डॉक्टर", "needs_review": false},
+        "ta": {"text": "மருத்துவர்", "needs_review": false},
+        "te": {"text": "డాక్టర్", "needs_review": false},
+        "bn": {"text": "ডাক্তার", "needs_review": false},
+        "mr": {"text": "डॉक्टर", "needs_review": false},
+        "gu": {"text": "ડૉક્ટર", "needs_review": false},
+        "kn": {"text": "ವೈದ್ಯರು", "needs_review": false},
+        "ml": {"text": "ഡോക്ടർ", "needs_review": false},
+        "pa": {"text": "ਡਾਕਟਰ", "needs_review": false},
+        "ur": {"text": "ڈاکٹر", "needs_review": false},
+    },
+    "family": {
+        "en": "Family",
+        "hi": {"text": "परिवार", "needs_review": false},
+        "ta": {"text": "குடும்பம்", "needs_review": false},
+        "te": {"text": "కుటుంబం", "needs_review": false},
+        "bn": {"text": "পরিবার", "needs_review": false},
+        "mr": {"text": "कुटुंब", "needs_review": false},
+        "gu": {"text": "પરિવાર", "needs_review": false},
+        "kn": {"text": "ಕುಟುಂಬ", "needs_review": false},
+        "ml": {"text": "കുടുംബം", "needs_review": false},
+        "pa": {"text": "ਪਰਿਵਾਰ", "needs_review": false},
+        "ur": {"text": "خاندان", "needs_review": false},
+    },
+    "work": {
+        "en": "Work",
+        "hi": {"text": "काम", "needs_review": false},
+        "ta": {"text": "வேலை", "needs_review": false},
+        "te": {"text": "పని", "needs_review": false},
+        "bn": {"text": "কাজ", "needs_review": false},
+        "mr": {"text": "काम", "needs_review": false},
+        "gu": {"text": "કામ", "needs_review": false},
+        "kn": {"text": "ಕೆಲಸ", "needs_review": false},
+        "ml": {"text": "ജോലി", "needs_review": false},
+        "pa": {"text": "ਕੰਮ", "needs_review": false},
+        "ur": {"text": "کام", "needs_review": false},
+    },
+    "school": {
+        "en": "School",
+        "hi": {"text": "स्कूल", "needs_review": false},
+        "ta": {"text": "பள்ளி", "needs_review": false},
+        "te": {"text": "పాఠశాల", "needs_review": false},
+        "bn": {"text": "বিদ্যালয়", "needs_review": false},
+        "mr": {"text": "शाळा", "needs_review": false},
+        "gu": {"text": "શાળા", "needs_review": false},
+        "kn": {"text": "ಶಾಲೆ", "needs_review": false},
+        "ml": {"text": "സ്കൂൾ", "needs_review": false},
+        "pa": {"text": "ਸਕੂਲ", "needs_review": false},
+        "ur": {"text": "اسکول", "needs_review": false},
+    },
+    "home": {
+        "en": "Home",
+        "hi": {"text": "घर", "needs_review": false},
+        "ta": {"text": "வீடு", "needs_review": false},
+        "te": {"text": "ఇల్లు", "needs_review": false},
+        "bn": {"text": "বাড়ি", "needs_review": false},
+        "mr": {"text": "घर", "needs_review": false},
+        "gu": {"text": "ઘર", "needs_review": false},
+        "kn": {"text": "ಮನೆ", "needs_review": false},
+        "ml": {"text": "വീട്", "needs_review": false},
+        "pa": {"text": "ਘਰ", "needs_review": false},
+        "ur": {"text": "گھر", "needs_review": false},
+    },
+    "money": {
+        "en": "Money",
+        "hi": {"text": "पैसा", "needs_review": false},
+        "ta": {"text": "பணம்", "needs_review": false},
+        "te": {"text": "డబ్బు", "needs_review": false},
+        "bn": {"text": "টাকা", "needs_review": false},
+        "mr": {"text": "पैसे", "needs_review": false},
+        "gu": {"text": "પૈસા", "needs_review": false},
+        "kn": {"text": "ಹಣ", "needs_review": false},
+        "ml": {"text": "പണം", "needs_review": false},
+        "pa": {"text": "ਪੈਸੇ", "needs_review": false},
+        "ur": {"text": "رقم", "needs_review": false},
+    },
+    "phone": {
+        "en": "Phone",
+        "hi": {"text": "फ़ोन", "needs_review": false},
+        "ta": {"text": "தொலைபேசி", "needs_review": false},
+        "te": {"text": "ఫోన్", "needs_review": false},
+        "bn": {"text": "ফোন", "needs_review": false},
+        "mr": {"text": "फोन", "needs_review": false},
+        "gu": {"text": "ફોન", "needs_review": false},
+        "kn": {"text": "ಫೋನ್", "needs_review": false},
+        "ml": {"text": "ഫോൺ", "needs_review": false},
+        "pa": {"text": "ਫ਼ੋਨ", "needs_review": false},
+        "ur": {"text": "فون", "needs_review": false},
+    },
+    "happy": {
+        "en": "Happy",
+        "hi": {"text": "ख़ुश", "needs_review": false},
+        "ta": {"text": "மகிழ்ச்சி", "needs_review": false},
+        "te": {"text": "సంతోషం", "needs_review": false},
+        "bn": {"text": "আনন্দিত", "needs_review": false},
+        "mr": {"text": "आनंदी", "needs_review": false},
+        "gu": {"text": "ખુશ", "needs_review": false},
+        "kn": {"text": "ಸಂತೋಷ", "needs_review": false},
+        "ml": {"text": "സന്തോഷം", "needs_review": false},
+        "pa": {"text": "ਖ਼ੁਸ਼", "needs_review": false},
+        "ur": {"text": "خوش", "needs_review": false},
+    },
+    "sad": {
+        "en": "Sad",
+        "hi": {"text": "उदास", "needs_review": false},
+        "ta": {"text": "சோகம்", "needs_review": false},
+        "te": {"text": "విచారం", "needs_review": false},
+        "bn": {"text": "দুঃখজনক", "needs_review": false},
+        "mr": {"text": "दुःखी", "needs_review": false},
+        "gu": {"text": "ઉદાસ", "needs_review": false},
+        "kn": {"text": "ದುಃಖ", "needs_review": false},
+        "ml": {"text": "ദുഃഖം", "needs_review": false},
+        "pa": {"text": "ਉਦਾਸ", "needs_review": false},
+        "ur": {"text": "اداس", "needs_review": false},
+    },
+}
+
+INDIAN_PHRASES = {
+    "help+water": {
+        "en": "I need help. I need water.",
+        "hi": {"text": "मुझे मदद चाहिए। मुझे पानी चाहिए।", "needs_review": false},
+        "ta": {"text": "எனக்கு உதவி வேண்டும். எனக்கு தண்ணீர் வேண்டும்.", "needs_review": false},
+        "te": {"text": "నాకు సహాయం కావాలి. నాకు నీరు కావాలి.", "needs_review": false},
+        "bn": {"text": "আমার সাহায্য দরকার। আমার জল দরকার।", "needs_review": false},
+        "mr": {"text": "मला मदत हवी आहे. मला पाणी हवे आहे.", "needs_review": false},
+        "gu": {"text": "મને મદદ જોઈએ છે. મને પાણી જોઈએ છે.", "needs_review": false},
+        "kn": {"text": "ನನಗೆ ಸಹಾಯ ಬೇಕು. ನನಗೆ ನೀರು ಬೇಕು.", "needs_review": false},
+        "ml": {"text": "എനിക്ക് സഹായം വേണം. എനിക്ക് വെള്ളം വേണം.", "needs_review": false},
+        "pa": {"text": "ਮੈਨੂੰ ਮਦਦ ਚਾਹੀਦੀ ਹੈ। ਮੈਨੂੰ ਪਾਣੀ ਚਾਹੀਦਾ ਹੈ।", "needs_review": false},
+        "ur": {"text": "مجھے مدد چاہئے۔ مجھے پانی چاہئے۔", "needs_review": false},
+    },
+    "pain+doctor": {
+        "en": "I am in pain. I need a doctor.",
+        "hi": {"text": "मुझे दर्द हो रहा है। मुझे डॉक्टर की ज़रूरत है।", "needs_review": false},
+        "ta": {"text": "எனக்கு வலிக்கிறது. எனக்கு மருத்துவர் தேவை.", "needs_review": false},
+        "te": {"text": "నాకు నొప్పిగా ఉంది. నాకు డాక్టర్ కావాలి.", "needs_review": false},
+        "bn": {"text": "আমার ব্যথা হচ্ছে। আমার ডাক্তার দরকার।", "needs_review": false},
+        "mr": {"text": "मला वेदना होत आहे. मला डॉक्टर हवे आहेत.", "needs_review": false},
+        "gu": {"text": "મને દુખાવો થાય છે. મને ડૉક્ટરની જરૂર છે.", "needs_review": false},
+        "kn": {"text": "ನನಗೆ ನೋವಾಗುತ್ತಿದೆ. ನನಗೆ ವೈದ್ಯರು ಬೇಕು.", "needs_review": false},
+        "ml": {"text": "എനിക്ക് വേദനയുണ്ട്. എനിക്ക് ഡോക്ടറെ വേണം.", "needs_review": false},
+        "pa": {"text": "ਮੈਨੂੰ ਦਰਦ ਹੋ ਰਿਹਾ ਹੈ। ਮੈਨੂੰ ਡਾਕਟਰ ਦੀ ਲੋੜ ਹੈ।", "needs_review": false},
+        "ur": {"text": "مجھے درد ہو رہا ہے۔ مجھے ڈاکٹر کی ضرورت ہے۔", "needs_review": false},
+    },
+    "medicine+please": {
+        "en": "Medicine, please.",
+        "hi": {"text": "दवा दीजिए, कृपया।", "needs_review": false},
+        "ta": {"text": "மருந்து வேண்டும், தயவுசெய்து.", "needs_review": false},
+        "te": {"text": "దయచేసి మందు ఇవ్వండి.", "needs_review": false},
+        "bn": {"text": "দয়া করে ওষুধ দিন।", "needs_review": false},
+        "mr": {"text": "कृपया औषध द्या.", "needs_review": false},
+        "gu": {"text": "કૃપા કરીને દવા આપો.", "needs_review": false},
+        "kn": {"text": "ದಯವಿಟ್ಟು ಔಷಧಿ ಕೊಡಿ.", "needs_review": false},
+        "ml": {"text": "ദയവായി മരുന്ന് തരൂ.", "needs_review": false},
+        "pa": {"text": "ਕਿਰਪਾ ਕਰਕੇ ਦਵਾਈ ਦਿਓ।", "needs_review": false},
+        "ur": {"text": "براہ مہربانی دوا دیجئے۔", "needs_review": false},
+    },
+    "thank_you": {
+        "en": "Thank you.",
+        "hi": {"text": "बहुत धन्यवाद।", "needs_review": false},
+        "ta": {"text": "மிக்க நன்றி.", "needs_review": false},
+        "te": {"text": "చాలా ధన్యవాదాలు.", "needs_review": false},
+        "bn": {"text": "অনেক ধন্যবাদ।", "needs_review": false},
+        "mr": {"text": "खूप खूप धन्यवाद.", "needs_review": false},
+        "gu": {"text": "ખૂબ ખૂબ આભાર.", "needs_review": false},
+        "kn": {"text": "ತುಂಬಾ ಧನ್ಯವಾದಗಳು.", "needs_review": false},
+        "ml": {"text": "വളരെ നന്ദി.", "needs_review": false},
+        "pa": {"text": "ਬਹੁਤ ਬਹੁਤ ਧੰਨਵਾਦ।", "needs_review": false},
+        "ur": {"text": "بہت شکریہ۔", "needs_review": false},
+    },
+}
+
+INDIAN_TEMPLATES = {
+    "need": {
+        "en": "I need {x}.",
+        "hi": {"text": "मुझे {x} चाहिए।", "needs_review": false},
+        "ta": {"text": "எனக்கு {x} வேண்டும்.", "needs_review": false},
+        "te": {"text": "నాకు {x} కావాలి.", "needs_review": false},
+        "bn": {"text": "আমার {x} দরকার।", "needs_review": false},
+        "mr": {"text": "मला {x} हवे आहे.", "needs_review": false},
+        "gu": {"text": "મને {x} જોઈએ છે.", "needs_review": false},
+        "kn": {"text": "ನನಗೆ {x} ಬೇಕು.", "needs_review": false},
+        "ml": {"text": "എനിക്ക് {x} വേണം.", "needs_review": false},
+        "pa": {"text": "ਮੈਨੂੰ {x} ਚਾਹੀਦਾ ਹੈ।", "needs_review": false},
+        "ur": {"text": "مجھے {x} چاہئے۔", "needs_review": false},
+    }
+}
+
+full_data = {
+    "concepts": INDIAN_CONCEPTS,
+    "phrases": INDIAN_PHRASES,
+    "templates": INDIAN_TEMPLATES,
+}
+
+# 1. Write translations.json
+trans_file = PROJECT_ROOT / "translations.json"
+with open(trans_file, "w", encoding="utf-8") as f:
+    json.dump(full_data, f, ensure_ascii=False, indent=2)
+
+print("Wrote translations.json successfully with all Indian languages (no fr/es).")
+
+# 2. Pre-cache audio files for all Indian languages
+CACHE_DIR = PROJECT_ROOT / "assets" / "audio_cache"
+CACHE_DIR.mkdir(parents=True, exist_ok=True)
+languages = ["en", "hi", "ta", "te", "bn", "mr", "gu", "kn", "ml", "pa", "ur"]
+headers = {"User-Agent": "Mozilla/5.0"}
+success = 0
+
+for concept, lang_dict in INDIAN_CONCEPTS.items():
+    for lang in languages:
+        target_file = CACHE_DIR / f"{lang}_{concept}.mp3"
+        if target_file.exists() and target_file.stat().st_size > 500:
+            success += 1
+            continue
+
+        entry = lang_dict.get(lang, "")
+        text = entry.get("text", "") if isinstance(entry, dict) else str(entry)
+        if not text:
+            continue
+
+        try:
+            encoded_text = urllib.parse.quote(text)
+            url = f"https://translate.google.com/translate_tts?ie=UTF-8&tl={lang}&client=tw-ob&q={encoded_text}"
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                audio_bytes = resp.read()
+            with open(target_file, "wb") as f:
+                f.write(audio_bytes)
+            success += 1
+            time.sleep(0.05)
+        except Exception as e:
+            print(f"Error caching {lang}_{concept}: {e}")
+
+# Cache phrases
+for pkey, lang_dict in INDIAN_PHRASES.items():
+    safe_pkey = pkey.replace("+", "_")
+    for lang in languages:
+        target_file = CACHE_DIR / f"{lang}_phrase_{safe_pkey}.mp3"
+        if target_file.exists() and target_file.stat().st_size > 500:
+            success += 1
+            continue
+
+        entry = lang_dict.get(lang, "")
+        text = entry.get("text", "") if isinstance(entry, dict) else str(entry)
+        if not text:
+            continue
+
+        try:
+            encoded_text = urllib.parse.quote(text)
+            url = f"https://translate.google.com/translate_tts?ie=UTF-8&tl={lang}&client=tw-ob&q={encoded_text}"
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                audio_bytes = resp.read()
+            with open(target_file, "wb") as f:
+                f.write(audio_bytes)
+            success += 1
+            time.sleep(0.05)
+        except Exception as e:
+            print(f"Error caching phrase {lang}_{safe_pkey}: {e}")
+
+print(f"All Indian audio files cached: {success} files available.")

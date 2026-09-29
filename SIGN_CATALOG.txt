@@ -1,0 +1,790 @@
+================================================================================
+          OFFLINE DUAL-LANGUAGE SIGN LANGUAGE RECOGNITION CATALOG
+                  ISL (Indian) & ASL (American) Signs
+================================================================================
+
+Total Classes: 40 (20 ISL Classes + 20 ASL Classes)
+Supported Target Languages (All Major Indian Languages):
+  - Hindi (हिंदी) [hi]
+  - Tamil (தமிழ்) [ta]
+  - Telugu (తెలుగు) [te]
+  - Bengali (বাংলা) [bn]
+  - Marathi (मराठी) [mr]
+  - Gujarati (ગુજરાતી) [gu]
+  - Kannada (ಕನ್ನಡ) [kn]
+  - Malayalam (മലയാളം) [ml]
+  - Punjabi (ਪੰਜਾਬੀ) [pa]
+  - Urdu (اردو) [ur]
+  - English (Pivot) [en]
+
+--------------------------------------------------------------------------------
+PART 1: AMERICAN SIGN LANGUAGE (ASL) SIGNS (Classes 20 to 39)
+--------------------------------------------------------------------------------
+
+[Class 20] HELLO
+- Concept: hello
+- Handshape: Open flat palm (B-handshape), fingers extended and together.
+- Location: Temple / forehead (Head zone).
+- Motion: Start near temple and salute or wave slightly outward forward.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): नमस्ते
+  * Tamil (தமிழ்): வணக்கம்
+  * Telugu (తెలుగు): నమస్కారం
+  * Bengali (বাংলা): নমস্কার
+  * Marathi (मराठी): नमस्कार
+  * Gujarati (ગુજરાતી): નમસ્તે
+  * Kannada (ಕನ್ನಡ): ನಮಸ್ಕಾರ
+  * Malayalam (മലയാളം): നമസ്കാരം
+  * Punjabi (ਪੰਜਾਬੀ): ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ
+  * Urdu (اردو): سلام
+  * English (Pivot): Hello
+
+[Class 21] THANK YOU
+- Concept: thank_you
+- Handshape: Flat open palm, fingers together pointing upward.
+- Location: Lips / chin (Chin zone).
+- Motion: Fingertips lightly touch chin/lips, then extend outward toward conversational partner.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): धन्यवाद
+  * Tamil (தமிழ்): நன்றி
+  * Telugu (తెలుగు): ధన్యవాదాలు
+  * Bengali (বাংলা): ধন্যবাদ
+  * Marathi (मराठी): धन्यवाद
+  * Gujarati (ગુજરાતી): આભાર
+  * Kannada (ಕನ್ನಡ): ಧನ್ಯವಾದಗಳು
+  * Malayalam (മലയാളം): നന്ദി
+  * Punjabi (ਪੰਜਾਬੀ): ਧੰਨਵਾਦ
+  * Urdu (اردو): شکریہ
+  * English (Pivot): Thank you
+
+[Class 22] PLEASE
+- Concept: please
+- Handshape: Flat open palm, fingers extended.
+- Location: Center of the chest (Chest zone).
+- Motion: Rub flat palm in a gentle clockwise circle against the chest/sternum.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): कृपया
+  * Tamil (தமிழ்): தயவுசெய்து
+  * Telugu (తెలుగు): దయచేసి
+  * Bengali (বাংলা): দয়া করে
+  * Marathi (मराठी): कृपया
+  * Gujarati (ગુજરાતી): કૃપા કરીને
+  * Kannada (ಕನ್ನಡ): ದಯವಿಟ್ಟು
+  * Malayalam (മലയാളം): ദയവായി
+  * Punjabi (ਪੰਜਾਬੀ): ਕਿਰਪਾ ਕਰਕੇ
+  * Urdu (اردو): براہ مہربانی
+  * English (Pivot): Please
+
+[Class 23] SORRY
+- Concept: sorry
+- Handshape: Closed fist (A-handshape, thumb across fingers).
+- Location: Over the heart / chest (Chest zone).
+- Motion: Rub closed fist in a circular motion on the chest.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): माफ़ कीजिए
+  * Tamil (தமிழ்): மன்னிக்கவும்
+  * Telugu (తెలుగు): క్షమించండి
+  * Bengali (বাংলা): দুঃখিত
+  * Marathi (मराठी): माफ करा
+  * Gujarati (ગુજરાતી): માફ કરશો
+  * Kannada (ಕನ್ನಡ): ಕ್ಷಮಿಸಿ
+  * Malayalam (മലയാളം): ക്ഷമിക്കണം
+  * Punjabi (ਪੰਜਾਬੀ): ਮਾਫ਼ ਕਰਨਾ
+  * Urdu (اردو): معاف کیجئے
+  * English (Pivot): Sorry
+
+[Class 24] PAIN
+- Concept: pain
+- Handshape: Both hands with index fingers extended (1-handshape), pointing tips toward each other.
+- Location: Chest or location of injury (Chest zone).
+- Motion: Twist or jab index fingers repeatedly toward each other without touching.
+- Execution: Both hands (two-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): दर्द
+  * Tamil (தமிழ்): வலி
+  * Telugu (తెలుగు): నొప్పి
+  * Bengali (বাংলা): ব্যথা
+  * Marathi (मराठी): वेदना
+  * Gujarati (ગુજરાતી): દર્દ
+  * Kannada (ಕನ್ನಡ): ನೋವು
+  * Malayalam (മലയാളം): വേദന
+  * Punjabi (ਪੰਜਾਬੀ): ਦਰਦ
+  * Urdu (اردو): درد
+  * English (Pivot): Pain
+
+[Class 25] NO
+- Concept: no
+- Handshape: Index and middle finger snap quickly down onto thumb.
+- Location: Chin / neutral zone.
+- Motion: Rapid closing snap of index and middle fingers against thumb.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): नहीं
+  * Tamil (தமிழ்): இல்லை
+  * Telugu (తెలుగు): కాదు
+  * Bengali (বাংলা): না
+  * Marathi (मराठी): नाही
+  * Gujarati (ગુજરાતી): ના
+  * Kannada (ಕನ್ನಡ): ಇಲ್ಲ
+  * Malayalam (മലയാളം): ഇല്ല
+  * Punjabi (ਪੰਜਾਬੀ): ਨਹੀਂ
+  * Urdu (اردو): نہیں
+  * English (Pivot): No
+
+[Class 26] YES
+- Concept: yes
+- Handshape: Closed fist (S-handshape).
+- Location: In front of chest / neutral zone.
+- Motion: Fist nods up and down pivoting at wrist like a head nodding.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): हाँ
+  * Tamil (தமிழ்): ஆம்
+  * Telugu (తెలుగు): అవును
+  * Bengali (বাংলা): হ্যাঁ
+  * Marathi (मराठी): हो
+  * Gujarati (ગુજરાતી): હા
+  * Kannada (ಕನ್ನಡ): ಹೌದು
+  * Malayalam (മലയാളം): അതേ
+  * Punjabi (ਪੰਜਾਬੀ): ਹਾਂ
+  * Urdu (اردو): ہاں
+  * English (Pivot): Yes
+
+[Class 27] HELP
+- Concept: help
+- Handshape: Non-dominant flat open palm facing up; dominant hand thumbs-up resting on palm.
+- Location: Chest level.
+- Motion: Both hands lift upward together.
+- Execution: Both hands (two-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): मदद
+  * Tamil (தமிழ்): உதவி
+  * Telugu (తెలుగు): సహాయం
+  * Bengali (বাংলা): সাহায্য
+  * Marathi (मराठी): मदत
+  * Gujarati (ગુજરાતી): મદદ
+  * Kannada (ಕನ್ನಡ): ಸಹಾಯ
+  * Malayalam (മലയാളം): സഹായം
+  * Punjabi (ਪੰਜਾਬੀ): ਮਦਦ
+  * Urdu (اردو): مدد
+  * English (Pivot): Help
+
+[Class 28] WATER
+- Concept: water
+- Handshape: W-handshape (Index, Middle, Ring extended; thumb over pinky).
+- Location: Chin / Lips (Chin zone).
+- Motion: Tap index finger of W-hand twice against the chin.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): पानी
+  * Tamil (தமிழ்): தண்ணீர்
+  * Telugu (తెలుగు): నీరు
+  * Bengali (বাংলা): জল
+  * Marathi (मराठी): पाणी
+  * Gujarati (ગુજરાતી): પાણી
+  * Kannada (ಕನ್ನಡ): ನೀರು
+  * Malayalam (മലയാളം): വെള്ളം
+  * Punjabi (ਪੰਜਾਬੀ): ਪਾਣੀ
+  * Urdu (اردو): پانی
+  * English (Pivot): Water
+
+[Class 29] FOOD
+- Concept: food
+- Handshape: Bunched fingers (Flat-O: all fingertips touching thumb).
+- Location: Mouth / Lips (Chin zone).
+- Motion: Tap bunched fingertips twice against the lips.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): खाना
+  * Tamil (தமிழ்): உணவு
+  * Telugu (తెలుగు): ఆహారం
+  * Bengali (বাংলা): খাবার
+  * Marathi (मराठी): जेवण
+  * Gujarati (ગુજરાતી): ખોરાક
+  * Kannada (ಕನ್ನಡ): ಆಹಾರ
+  * Malayalam (മലയാളം): ഭക്ഷണം
+  * Punjabi (ਪੰਜਾਬੀ): ਖਾਣਾ
+  * Urdu (اردو): کھانا
+  * English (Pivot): Food
+
+[Class 30] MEDICINE
+- Concept: medicine
+- Handshape: Non-dominant hand flat open palm up; dominant middle finger extended.
+- Location: Chest level.
+- Motion: Middle fingertip twists or presses into the center of the open palm.
+- Execution: Both hands (two-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): दवा
+  * Tamil (தமிழ்): மருந்து
+  * Telugu (తెలుగు): మందు
+  * Bengali (বাংলা): ওষুধ
+  * Marathi (मराठी): औषध
+  * Gujarati (ગુજરાતી): દવા
+  * Kannada (ಕನ್ನಡ): ಔಷಧಿ
+  * Malayalam (മലയാളം): മരുന്ന്
+  * Punjabi (ਪੰਜਾਬੀ): ਦਵਾਈ
+  * Urdu (اردو): دوا
+  * English (Pivot): Medicine
+
+[Class 31] DOCTOR
+- Concept: doctor
+- Handshape: Dominant index and middle fingertips (M-handshape).
+- Location: Inner wrist of non-dominant arm (Chest zone).
+- Motion: Tap fingertips twice on inner wrist taking radial pulse.
+- Execution: Both hands (two-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): डॉक्टर
+  * Tamil (தமிழ்): மருத்துவர்
+  * Telugu (తెలుగు): డాక్టర్
+  * Bengali (বাংলা): ডাক্তার
+  * Marathi (मराठी): डॉक्टर
+  * Gujarati (ગુજરાતી): ડૉક્ટર
+  * Kannada (ಕನ್ನಡ): ವೈದ್ಯರು
+  * Malayalam (മലയാളം): ഡോക്ടർ
+  * Punjabi (ਪੰਜਾਬੀ): ਡਾਕਟਰ
+  * Urdu (اردو): ڈاکٹر
+  * English (Pivot): Doctor
+
+[Class 32] FAMILY
+- Concept: family
+- Handshape: Both hands in F-handshapes (thumb and index touching, 3 fingers up).
+- Location: Chest level.
+- Motion: Both hands sweep outward in a circle and meet with pinkies touching.
+- Execution: Both hands (two-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): परिवार
+  * Tamil (தமிழ்): குடும்பம்
+  * Telugu (తెలుగు): కుటుంబం
+  * Bengali (বাংলা): পরিবার
+  * Marathi (मराठी): कुटुंब
+  * Gujarati (ગુજરાતી): પરિવાર
+  * Kannada (ಕನ್ನಡ): ಕುಟುಂಬ
+  * Malayalam (മലയാളം): കുടുംബം
+  * Punjabi (ਪੰਜਾਬੀ): ਪਰਿਵਾਰ
+  * Urdu (اردو): خاندان
+  * English (Pivot): Family
+
+[Class 33] WORK
+- Concept: work
+- Handshape: Both hands in closed fists.
+- Location: Chest level.
+- Motion: Dominant fist taps the wrist/back of non-dominant fist twice.
+- Execution: Both hands (two-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): काम
+  * Tamil (தமிழ்): வேலை
+  * Telugu (తెలుగు): పని
+  * Bengali (বাংলা): কাজ
+  * Marathi (मराठी): काम
+  * Gujarati (ગુજરાતી): કામ
+  * Kannada (ಕನ್ನಡ): ಕೆಲಸ
+  * Malayalam (മലയാളം): ജോലി
+  * Punjabi (ਪੰਜਾਬੀ): ਕੰਮ
+  * Urdu (اردو): کام
+  * English (Pivot): Work
+
+[Class 34] SCHOOL
+- Concept: school
+- Handshape: Both hands open palms.
+- Location: Chest level.
+- Motion: Dominant flat palm claps down horizontally twice onto non-dominant flat palm.
+- Execution: Both hands (two-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): स्कूल
+  * Tamil (தமிழ்): பள்ளி
+  * Telugu (తెలుగు): పాఠశాల
+  * Bengali (বাংলা): বিদ্যালয়
+  * Marathi (मराठी): शाळा
+  * Gujarati (ગુજરાતી): શાળા
+  * Kannada (ಕನ್ನಡ): ಶಾಲೆ
+  * Malayalam (മലയാളം): സ്കൂൾ
+  * Punjabi (ਪੰਜਾਬੀ): ਸਕੂਲ
+  * Urdu (اردو): اسکول
+  * English (Pivot): School
+
+[Class 35] HOME
+- Concept: home
+- Handshape: Bunched fingers (Flat-O shape).
+- Location: Cheek near mouth, then cheek near ear.
+- Motion: Touch cheek near mouth, then touch cheek near ear (eat + sleep).
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): घर
+  * Tamil (தமிழ்): வீடு
+  * Telugu (తెలుగు): ఇల్లు
+  * Bengali (বাংলা): বাড়ি
+  * Marathi (मराठी): घर
+  * Gujarati (ગુજરાતી): ઘર
+  * Kannada (ಕನ್ನಡ): ಮನೆ
+  * Malayalam (മലയാളം): വീട്
+  * Punjabi (ਪੰਜਾਬੀ): ਘਰ
+  * Urdu (اردو): گھر
+  * English (Pivot): Home
+
+[Class 36] MONEY
+- Concept: money
+- Handshape: Dominant hand bunched fingers.
+- Location: Non-dominant flat palm or chest.
+- Motion: Tap back of bunched fingers into palm or rub thumb across fingertips.
+- Execution: Dominant hand or two hands.
+- Translations across Indian Languages:
+  * Hindi (हिंदी): पैसा
+  * Tamil (தமிழ்): பணம்
+  * Telugu (తెలుగు): డబ్బు
+  * Bengali (বাংলা): টাকা
+  * Marathi (मराठी): पैसे
+  * Gujarati (ગુજરાતી): પૈસા
+  * Kannada (ಕನ್ನಡ): ಹಣ
+  * Malayalam (മലയാളം): പണം
+  * Punjabi (ਪੰਜਾਬੀ): ਪੈਸੇ
+  * Urdu (اردو): رقم
+  * English (Pivot): Money
+
+[Class 37] PHONE
+- Concept: phone
+- Handshape: Y-handshape (Thumb and Pinky extended, middle three curled).
+- Location: Side of head / ear (Head zone).
+- Motion: Thumb near ear, pinky near mouth, held or tilted.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): फ़ोन
+  * Tamil (தமிழ்): தொலைபேசி
+  * Telugu (తెలుగు): ఫోన్
+  * Bengali (বাংলা): ফোন
+  * Marathi (मराठी): फोन
+  * Gujarati (ગુજરાતી): ફોન
+  * Kannada (ಕನ್ನಡ): ಫೋನ್
+  * Malayalam (മലയാളം): ഫോൺ
+  * Punjabi (ਪੰਜਾਬੀ): ਫ਼ੋਨ
+  * Urdu (اردو): فون
+  * English (Pivot): Phone
+
+[Class 38] HAPPY
+- Concept: happy
+- Handshape: Flat open hand, fingers together, palm facing chest.
+- Location: Chest / sternum level.
+- Motion: Brush palm upward against chest in repeated cheerful upward strokes.
+- Execution: One or both hands.
+- Translations across Indian Languages:
+  * Hindi (हिंदी): ख़ुश
+  * Tamil (தமிழ்): மகிழ்ச்சி
+  * Telugu (తెలుగు): సంతోషం
+  * Bengali (বাংলা): আনন্দিত
+  * Marathi (मराठी): आनंदी
+  * Gujarati (ગુજરાતી): ખુશ
+  * Kannada (ಕನ್ನಡ): ಸಂತೋಷ
+  * Malayalam (മലയാളം): സന്തോഷം
+  * Punjabi (ਪੰਜਾਬੀ): ਖ਼ੁਸ਼
+  * Urdu (اردو): خوش
+  * English (Pivot): Happy
+
+[Class 39] SAD
+- Concept: sad
+- Handshape: Open hand with slightly drooping fingers facing inward.
+- Location: Eyes down to chin (Chin zone).
+- Motion: Hand drags downward across the face while head tilts down.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): उदास
+  * Tamil (தமிழ்): சோகம்
+  * Telugu (తెలుగు): విచారం
+  * Bengali (বাংলা): দুঃখজনক
+  * Marathi (मराठी): दुःखी
+  * Gujarati (ગુજરાતી): ઉદાસ
+  * Kannada (ಕನ್ನಡ): ದುಃಖ
+  * Malayalam (മലയാളം): ദുഃഖം
+  * Punjabi (ਪੰਜਾਬੀ): ਉਦਾਸ
+  * Urdu (اردو): اداس
+  * English (Pivot): Sad
+
+--------------------------------------------------------------------------------
+PART 2: INDIAN SIGN LANGUAGE (ISL) SIGNS (Classes 0 to 19)
+--------------------------------------------------------------------------------
+
+[Class 0] HELLO
+- Concept: hello
+- Handshape: Open flat palm facing forward.
+- Location: Upper chest / shoulder (Head / Chest zone).
+- Motion: Wave hand side-to-side horizontally.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): नमस्ते
+  * Tamil (தமிழ்): வணக்கம்
+  * Telugu (తెలుగు): నమస్కారం
+  * Bengali (বাংলা): নমস্কার
+  * Marathi (मराठी): नमस्कार
+  * Gujarati (ગુજરાતી): નમસ્તે
+  * Kannada (ಕನ್ನಡ): ನಮಸ್ಕಾರ
+  * Malayalam (മലയാളം): നമസ്കാരം
+  * Punjabi (ਪੰਜਾਬੀ): ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ
+  * Urdu (اردو): سلام
+  * English (Pivot): Hello
+
+[Class 1] THANK YOU
+- Concept: thank_you
+- Handshape: Flat open hand touching lips.
+- Location: Chin / Mouth (Chin zone).
+- Motion: Touch chin/lips and bring forward slightly, acknowledging receiver.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): धन्यवाद
+  * Tamil (தமிழ்): நன்றி
+  * Telugu (తెలుగు): ధన్యవాదాలు
+  * Bengali (বাংলা): ধন্যবাদ
+  * Marathi (मराठी): धन्यवाद
+  * Gujarati (ગુજરાતી): આભાર
+  * Kannada (ಕನ್ನಡ): ಧನ್ಯವಾದಗಳು
+  * Malayalam (മലയാളം): നന്ദി
+  * Punjabi (ਪੰਜਾਬੀ): ਧੰਨਵਾਦ
+  * Urdu (اردو): شکریہ
+  * English (Pivot): Thank you
+
+[Class 2] PLEASE
+- Concept: please
+- Handshape: Both open palms pressed together vertically (Namaste / Prayer).
+- Location: Center of chest (Chest zone).
+- Motion: Held still or dipped slightly in traditional Indian respect gesture.
+- Execution: Both hands (two-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): कृपया
+  * Tamil (தமிழ்): தயவுசெய்து
+  * Telugu (తెలుగు): దయచేసి
+  * Bengali (বাংলা): দয়া করে
+  * Marathi (मराठी): कृपया
+  * Gujarati (ગુજરાતી): કૃપા કરીને
+  * Kannada (ಕನ್ನಡ): ದಯವಿಟ್ಟು
+  * Malayalam (മലയാളം): ദയവായി
+  * Punjabi (ਪੰਜਾਬੀ): ਕਿਰਪਾ ਕਰਕੇ
+  * Urdu (اردو): براہ مہربانی
+  * English (Pivot): Please
+
+[Class 3] SORRY
+- Concept: sorry
+- Handshape: Fingers grasping or holding earlobe (ISL traditional ear-hold).
+- Location: Ear level (Head zone).
+- Motion: Grasp earlobes with thumb and index fingers, holding head slightly bowed.
+- Execution: Single hand or both hands at ears.
+- Translations across Indian Languages:
+  * Hindi (हिंदी): माफ़ कीजिए
+  * Tamil (தமிழ்): மன்னிக்கவும்
+  * Telugu (తెలుగు): క్షమించండి
+  * Bengali (বাংলা): দুঃখিত
+  * Marathi (मराठी): माफ करा
+  * Gujarati (ગુજરાતી): માફ કરશો
+  * Kannada (ಕನ್ನಡ): ಕ್ಷಮಿಸಿ
+  * Malayalam (മലയാളം): ക്ഷമിക്കണം
+  * Punjabi (ਪੰਜਾਬੀ): ਮਾਫ਼ ਕਰਨਾ
+  * Urdu (اردو): معاف کیجئے
+  * English (Pivot): Sorry
+
+[Class 4] PAIN
+- Concept: pain
+- Handshape: Index finger extended.
+- Location: Chest or area of distress.
+- Motion: Repeated jabbing or pointing at chest or pain location.
+- Execution: Dominant hand or two hands.
+- Translations across Indian Languages:
+  * Hindi (हिंदी): दर्द
+  * Tamil (தமிழ்): வலி
+  * Telugu (తెలుగు): నొప్పి
+  * Bengali (বাংলা): ব্যথা
+  * Marathi (मराठी): वेदना
+  * Gujarati (ગુજરાતી): દર્દ
+  * Kannada (ಕನ್ನಡ): ನೋವು
+  * Malayalam (മലയാളം): വേദന
+  * Punjabi (ਪੰਜਾਬੀ): ਦਰਦ
+  * Urdu (اردو): درد
+  * English (Pivot): Pain
+
+[Class 5] NO
+- Concept: no
+- Handshape: Index finger pointing upward.
+- Location: Chin / chest zone.
+- Motion: Wag index finger side-to-side in clear negation.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): नहीं
+  * Tamil (தமிழ்): இல்லை
+  * Telugu (తెలుగు): కాదు
+  * Bengali (বাংলা): না
+  * Marathi (मराठी): नाही
+  * Gujarati (ગુજરાતી): ના
+  * Kannada (ಕನ್ನಡ): ಇಲ್ಲ
+  * Malayalam (മലയാളം): ഇല്ല
+  * Punjabi (ਪੰਜਾਬੀ): ਨਹੀਂ
+  * Urdu (اردو): نہیں
+  * English (Pivot): No
+
+[Class 6] YES
+- Concept: yes
+- Handshape: Closed fist.
+- Location: In front of chest.
+- Motion: Vertical nodding or dipping of the fist.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): हाँ
+  * Tamil (தமிழ்): ஆம்
+  * Telugu (తెలుగు): అవును
+  * Bengali (বাংলা): হ্যাঁ
+  * Marathi (मराठी): हो
+  * Gujarati (ગુજરાતી): હા
+  * Kannada (ಕನ್ನಡ): ಹೌದು
+  * Malayalam (മലയാളം): അതേ
+  * Punjabi (ਪੰਜਾਬੀ): ਹਾਂ
+  * Urdu (اردو): ہاں
+  * English (Pivot): Yes
+
+[Class 7] HELP
+- Concept: help
+- Handshape: Dominant thumbs-up placed on non-dominant open flat palm.
+- Location: Chest level.
+- Motion: Upward lifting motion indicating support.
+- Execution: Both hands (two-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): मदद
+  * Tamil (தமிழ்): உதவி
+  * Telugu (తెలుగు): సహాయం
+  * Bengali (বাংলা): সাহায্য
+  * Marathi (मराठी): मदत
+  * Gujarati (ગુજરાતી): મદદ
+  * Kannada (ಕನ್ನಡ): ಸಹಾಯ
+  * Malayalam (മലയാളം): സഹായം
+  * Punjabi (ਪੰਜਾਬੀ): ਮਦਦ
+  * Urdu (اردو): مدد
+  * English (Pivot): Help
+
+[Class 8] WATER
+- Concept: water
+- Handshape: Cup hand or W-handshape near mouth.
+- Location: Mouth / Chin zone.
+- Motion: Tilting toward mouth simulating drinking.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): पानी
+  * Tamil (தமிழ்): தண்ணீர்
+  * Telugu (తెలుగు): నీరు
+  * Bengali (বাংলা): জল
+  * Marathi (मराठी): पाणी
+  * Gujarati (ગુજરાતી): પાણી
+  * Kannada (ಕನ್ನಡ): ನೀರು
+  * Malayalam (മലയാളം): വെള്ളം
+  * Punjabi (ਪੰਜਾਬੀ): ਪਾਣੀ
+  * Urdu (اردو): پانی
+  * English (Pivot): Water
+
+[Class 9] FOOD
+- Concept: food
+- Handshape: Bunched fingertips touching thumb.
+- Location: Mouth (Chin zone).
+- Motion: Bringing food to mouth motion repeatedly.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): खाना
+  * Tamil (தமிழ்): உணவு
+  * Telugu (తెలుగు): ఆహారం
+  * Bengali (বাংলা): খাবার
+  * Marathi (मराठी): जेवण
+  * Gujarati (ગુજરાતી): ખોરાક
+  * Kannada (ಕನ್ನಡ): ಆಹಾರ
+  * Malayalam (മലയാളം): ഭക്ഷണം
+  * Punjabi (ਪੰਜਾਬੀ): ਖਾਣਾ
+  * Urdu (اردو): کھانا
+  * English (Pivot): Food
+
+[Class 10] MEDICINE
+- Concept: medicine
+- Handshape: Fingertip grinding or pressing in palm.
+- Location: Chest level.
+- Motion: Stirring or grinding motion representing crushing medicine.
+- Execution: Both hands (two-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): दवा
+  * Tamil (தமிழ்): மருந்து
+  * Telugu (తెలుగు): మందు
+  * Bengali (বাংলা): ওষুধ
+  * Marathi (मराठी): औषध
+  * Gujarati (ગુજરાતી): દવા
+  * Kannada (ಕನ್ನಡ): ಔಷಧಿ
+  * Malayalam (മലയാളം): മരുന്ന്
+  * Punjabi (ਪੰਜਾਬੀ): ਦਵਾਈ
+  * Urdu (اردو): دوا
+  * English (Pivot): Medicine
+
+[Class 11] DOCTOR
+- Concept: doctor
+- Handshape: Fingertips touching opposite wrist.
+- Location: Radial pulse / wrist (Chest zone).
+- Motion: Touching inner wrist checking pulse.
+- Execution: Both hands (two-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): डॉक्टर
+  * Tamil (தமிழ்): மருத்துவர்
+  * Telugu (తెలుగు): డాక్టర్
+  * Bengali (বাংলা): ডাক্তার
+  * Marathi (मराठी): डॉक्टर
+  * Gujarati (ગુજરાતી): ડૉક્ટર
+  * Kannada (ಕನ್ನಡ): ವೈದ್ಯರು
+  * Malayalam (മലയാളം): ഡോക്ടർ
+  * Punjabi (ਪੰਜਾਬੀ): ਡਾਕਟਰ
+  * Urdu (اردو): ڈاکٹر
+  * English (Pivot): Doctor
+
+[Class 12] FAMILY
+- Concept: family
+- Handshape: Both open hands forming a circle.
+- Location: Chest level.
+- Motion: Enclosing circular embrace motion.
+- Execution: Both hands (two-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): परिवार
+  * Tamil (தமிழ்): குடும்பம்
+  * Telugu (తెలుగు): కుటుంబం
+  * Bengali (বাংলা): পরিবার
+  * Marathi (मराठी): कुटुंब
+  * Gujarati (ગુજરાતી): પરિવાર
+  * Kannada (ಕನ್ನಡ): ಕುಟುಂಬ
+  * Malayalam (മലയാളം): കുടുംബം
+  * Punjabi (ਪੰਜਾਬੀ): ਪਰਿਵਾਰ
+  * Urdu (اردو): خاندان
+  * English (Pivot): Family
+
+[Class 13] WORK
+- Concept: work
+- Handshape: Both fists tapping together.
+- Location: Chest level.
+- Motion: Rhythmic tapping of fists together.
+- Execution: Both hands (two-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): काम
+  * Tamil (தமிழ்): வேலை
+  * Telugu (తెలుగు): పని
+  * Bengali (বাংলা): কাজ
+  * Marathi (मराठी): काम
+  * Gujarati (ગુજરાતી): કામ
+  * Kannada (ಕನ್ನಡ): ಕೆಲಸ
+  * Malayalam (മലയാളം): ജോലി
+  * Punjabi (ਪੰਜਾਬੀ): ਕੰਮ
+  * Urdu (اردو): کام
+  * English (Pivot): Work
+
+[Class 14] SCHOOL
+- Concept: school
+- Handshape: Both open hands.
+- Location: Chest level.
+- Motion: Horizontal clapping motion representing books / learning.
+- Execution: Both hands (two-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): स्कूल
+  * Tamil (தமிழ்): பள்ளி
+  * Telugu (తెలుగు): పాఠశాల
+  * Bengali (বাংলা): বিদ্যালয়
+  * Marathi (मराठी): शाळा
+  * Gujarati (ગુજરાતી): શાળા
+  * Kannada (ಕನ್ನಡ): ಶಾಲೆ
+  * Malayalam (മലയാളം): സ്കൂൾ
+  * Punjabi (ਪੰਜਾਬੀ): ਸਕੂਲ
+  * Urdu (اردو): اسکول
+  * English (Pivot): School
+
+[Class 15] HOME
+- Concept: home
+- Handshape: Both hands forming roof / inverted V.
+- Location: Chest / chin level.
+- Motion: Fingertips touching at angle like house roof.
+- Execution: Both hands or cheek touch.
+- Translations across Indian Languages:
+  * Hindi (हिंदी): घर
+  * Tamil (தமிழ்): வீடு
+  * Telugu (తెలుగు): ఇల్లు
+  * Bengali (বাংলা): বাড়ি
+  * Marathi (मराठी): घर
+  * Gujarati (ગુજરાતી): ઘર
+  * Kannada (ಕನ್ನಡ): ಮನೆ
+  * Malayalam (മലയാളം): വീട്
+  * Punjabi (ਪੰਜਾਬੀ): ਘਰ
+  * Urdu (اردو): گھر
+  * English (Pivot): Home
+
+[Class 16] MONEY
+- Concept: money
+- Handshape: Thumb rubbing across index and middle fingertips.
+- Location: Chest / neutral level.
+- Motion: Fingers rubbing together indicating counting coins/rupees.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): पैसा
+  * Tamil (தமிழ்): பணம்
+  * Telugu (తెలుగు): డబ్బు
+  * Bengali (বাংলা): টাকা
+  * Marathi (मराठी): पैसे
+  * Gujarati (ગુજરાતી): પૈસા
+  * Kannada (ಕನ್ನಡ): ಹಣ
+  * Malayalam (മലയാളം): പണം
+  * Punjabi (ਪੰਜਾਬੀ): ਪੈਸੇ
+  * Urdu (اردو): رقم
+  * English (Pivot): Money
+
+[Class 17] PHONE
+- Concept: phone
+- Handshape: Y-handshape or fist to ear.
+- Location: Ear level (Head zone).
+- Motion: Holding phone receiver to ear.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): फ़ोन
+  * Tamil (தமிழ்): தொலைபேசி
+  * Telugu (తెలుగు): ఫోన్
+  * Bengali (বাংলা): ফোন
+  * Marathi (मराठी): फोन
+  * Gujarati (ગુજરાતી): ફોન
+  * Kannada (ಕನ್ನಡ): ಫೋನ್
+  * Malayalam (മലയാളം): ഫോൺ
+  * Punjabi (ਪੰਜਾਬੀ): ਫ਼ੋਨ
+  * Urdu (اردو): فون
+  * English (Pivot): Phone
+
+[Class 18] HAPPY
+- Concept: happy
+- Handshape: Open flat hands brushing upward.
+- Location: Chest level.
+- Motion: Upward brushing stroke conveying uplifting joy.
+- Execution: One or both hands.
+- Translations across Indian Languages:
+  * Hindi (हिंदी): ख़ुश
+  * Tamil (தமிழ்): மகிழ்ச்சி
+  * Telugu (తెలుగు): సంతోషం
+  * Bengali (বাংলা): আনন্দিত
+  * Marathi (मराठी): आनंदी
+  * Gujarati (ગુજરાતી): ખુશ
+  * Kannada (ಕನ್ನಡ): ಸಂತೋಷ
+  * Malayalam (മലയാളം): സന്തോഷം
+  * Punjabi (ਪੰਜਾਬੀ): ਖ਼ੁਸ਼
+  * Urdu (اردو): خوش
+  * English (Pivot): Happy
+
+[Class 19] SAD
+- Concept: sad
+- Handshape: Open hand drooping downward.
+- Location: Face down to chest.
+- Motion: Downward drawing motion symbolizing sorrow.
+- Execution: Dominant hand (one-handed).
+- Translations across Indian Languages:
+  * Hindi (हिंदी): उदास
+  * Tamil (தமிழ்): சோகம்
+  * Telugu (తెలుగు): విచారం
+  * Bengali (বাংলা): দুঃখজনক
+  * Marathi (मराठी): दुःखी
+  * Gujarati (ગુજરાતી): ઉદાસ
+  * Kannada (ಕನ್ನಡ): ದುಃಖ
+  * Malayalam (മലയാളം): ദുഃഖം
+  * Punjabi (ਪੰਜਾਬੀ): ਉਦਾਸ
+  * Urdu (اردو): اداس
+  * English (Pivot): Sad
+
+================================================================================
+END OF CATALOG - ALL 40 SIGNS & 11 INDIAN LANGUAGES
+================================================================================

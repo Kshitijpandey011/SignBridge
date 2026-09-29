@@ -9,7 +9,7 @@ from here to ensure numerical consistency across the pipeline.
 from __future__ import annotations
 
 import math
-from typing import Any, Optional, Tuple
+from typing import Any
 
 import cv2
 import mediapipe as mp
@@ -151,40 +151,164 @@ def compute_motion_energy(feat_prev: np.ndarray, feat_curr: np.ndarray) -> float
     return energy
 
 
+UPPER_BODY_CONNECTIONS = frozenset([
+    (11, 12),  # Left shoulder to right shoulder
+    (11, 13),  # Left shoulder to left elbow
+    (13, 15),  # Left elbow to left wrist
+    (12, 14),  # Right shoulder to right elbow
+    (14, 16),  # Right elbow to right wrist
+    (11, 23),  # Left shoulder to left hip
+    (12, 24),  # Right shoulder to right hip
+    (23, 24),  # Left hip to right hip
+    (0, 11),   # Nose to left shoulder
+    (0, 12),   # Nose to right shoulder
+])
+
+FINGERTIP_INDICES = (4, 8, 12, 16, 20)
+
+
 def draw_styled_landmarks(image: np.ndarray, results: Any) -> np.ndarray:
-    """Render skeleton landmarks on a copy of the input image for debugging/UI."""
+    """Render high-precision skeleton landmarks and anatomical contours on the video frame.
+
+    Draws:
+    1. Facial contours (jawline, lips, nose bridge, eyes) with soft cyber-blue lines.
+    2. Upper-body pose skeleton with glowing joints (shoulders, elbows, wrists, torso).
+    3. Left and Right hands with high-contrast bones, knuckle nodes, and illuminated fingertips.
+    """
     annotated = image.copy()
+    h, w, _ = annotated.shape
     mp_drawing = mp.solutions.drawing_utils
     mp_holistic = mp.solutions.holistic
 
-    # Draw pose connections
+    # 1. Subtle Facial Contours (Mouth, Chin, Eyes, Face Oval)
+    if results.face_landmarks:
+        mp_drawing.draw_landmarks(
+            annotated,
+            results.face_landmarks,
+            mp_holistic.FACEMESH_CONTOURS,
+            landmark_drawing_spec=None,
+            connection_drawing_spec=mp_drawing.DrawingSpec(color=(147, 197, 253), thickness=1, circle_radius=1),
+        )
+
+    # 2. Upper-Body Pose Skeleton (Shoulders, Arms, Elbows, Wrists, Torso)
     if results.pose_landmarks:
         mp_drawing.draw_landmarks(
             annotated,
             results.pose_landmarks,
-            mp_holistic.POSE_CONNECTIONS,
-            mp_drawing.DrawingSpec(color=(80, 110, 10), thickness=1, circle_radius=1),
-            mp_drawing.DrawingSpec(color=(80, 256, 121), thickness=1, circle_radius=1),
+            UPPER_BODY_CONNECTIONS,
+            landmark_drawing_spec=mp_drawing.DrawingSpec(color=(255, 255, 255), thickness=1, circle_radius=3),
+            connection_drawing_spec=mp_drawing.DrawingSpec(color=(56, 189, 248), thickness=2, circle_radius=2),
         )
+        # Highlight key upper body joints
+        for j_idx in (11, 12, 13, 14, 15, 16):
+            lm = results.pose_landmarks.landmark[j_idx]
+            if getattr(lm, "visibility", 1.0) > 0.35:
+                cx, cy = int(lm.x * w), int(lm.y * h)
+                cv2.circle(annotated, (cx, cy), 6, (14, 165, 233), -1, cv2.LINE_AA)
+                cv2.circle(annotated, (cx, cy), 3, (255, 255, 255), -1, cv2.LINE_AA)
 
-    # Draw left hand connections
+    # 3. Left Hand: Electric Cyan Skeleton with Vivid Emerald Fingertips
     if results.left_hand_landmarks:
         mp_drawing.draw_landmarks(
             annotated,
             results.left_hand_landmarks,
             mp_holistic.HAND_CONNECTIONS,
-            mp_drawing.DrawingSpec(color=(121, 22, 76), thickness=2, circle_radius=2),
-            mp_drawing.DrawingSpec(color=(121, 44, 250), thickness=2, circle_radius=1),
+            landmark_drawing_spec=mp_drawing.DrawingSpec(color=(255, 255, 255), thickness=1, circle_radius=2),
+            connection_drawing_spec=mp_drawing.DrawingSpec(color=(6, 182, 212), thickness=2, circle_radius=1),
         )
+        for tip_idx in FINGERTIP_INDICES:
+            lm = results.left_hand_landmarks.landmark[tip_idx]
+            cx, cy = int(lm.x * w), int(lm.y * h)
+            cv2.circle(annotated, (cx, cy), 6, (34, 197, 94), -1, cv2.LINE_AA)
+            cv2.circle(annotated, (cx, cy), 2, (255, 255, 255), -1, cv2.LINE_AA)
 
-    # Draw right hand connections
+    # 4. Right Hand: Neon Coral Skeleton with Golden Amber Fingertips
     if results.right_hand_landmarks:
         mp_drawing.draw_landmarks(
             annotated,
             results.right_hand_landmarks,
             mp_holistic.HAND_CONNECTIONS,
-            mp_drawing.DrawingSpec(color=(245, 117, 66), thickness=2, circle_radius=2),
-            mp_drawing.DrawingSpec(color=(245, 66, 230), thickness=2, circle_radius=1),
+            landmark_drawing_spec=mp_drawing.DrawingSpec(color=(255, 255, 255), thickness=1, circle_radius=2),
+            connection_drawing_spec=mp_drawing.DrawingSpec(color=(249, 115, 22), thickness=2, circle_radius=1),
         )
+        for tip_idx in FINGERTIP_INDICES:
+            lm = results.right_hand_landmarks.landmark[tip_idx]
+            cx, cy = int(lm.x * w), int(lm.y * h)
+            cv2.circle(annotated, (cx, cy), 6, (234, 179, 8), -1, cv2.LINE_AA)
+            cv2.circle(annotated, (cx, cy), 2, (255, 255, 255), -1, cv2.LINE_AA)
 
     return annotated
+
+
+_UNICODE_FONT_CACHE: dict[int, Any] = {}
+
+
+def get_unicode_font(size: int = 18) -> Any:
+    """Load and cache a TrueType Unicode/Indic supporting font."""
+    global _UNICODE_FONT_CACHE
+    if size in _UNICODE_FONT_CACHE:
+        return _UNICODE_FONT_CACHE[size]
+
+    import os
+    from PIL import ImageFont
+
+    candidate_paths = [
+        "C:/Windows/Fonts/Nirmala.ttc",
+        "C:/Windows/Fonts/Nirmala.ttf",
+        "C:/Windows/Fonts/ARIALUNI.ttf",
+        "C:/Windows/Fonts/segoeui.ttf",
+        "C:/Windows/Fonts/arial.ttf",
+        "/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    ]
+    font = None
+    for p in candidate_paths:
+        if os.path.exists(p):
+            try:
+                font = ImageFont.truetype(p, size)
+                break
+            except Exception:
+                pass
+    if font is None:
+        try:
+            font = ImageFont.load_default()
+        except Exception:
+            font = None
+    _UNICODE_FONT_CACHE[size] = font
+    return font
+
+
+def draw_unicode_text(
+    image: np.ndarray,
+    text: str,
+    pos: tuple[int, int],
+    color: tuple[int, int, int] = (16, 185, 129),
+    font_size: int = 18,
+    is_bgr: bool = False,
+) -> np.ndarray:
+    """Draw Unicode / Indic text safely onto a NumPy image (RGB or BGR) using PIL.
+
+    If is_bgr=True, color is treated as (B, G, R) and converted appropriately for PIL.
+    """
+    if not text:
+        return image
+    try:
+        from PIL import Image, ImageDraw
+
+        if is_bgr:
+            pil_color = (color[2], color[1], color[0]) if len(color) >= 3 else color
+            rgb_img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            pil_img = Image.fromarray(rgb_img)
+            draw = ImageDraw.Draw(pil_img)
+            font = get_unicode_font(font_size)
+            draw.text(pos, text, font=font, fill=pil_color)
+            return cv2.cvtColor(np.asarray(pil_img), cv2.COLOR_RGB2BGR)
+        else:
+            pil_img = Image.fromarray(image)
+            draw = ImageDraw.Draw(pil_img)
+            font = get_unicode_font(font_size)
+            draw.text(pos, text, font=font, fill=color)
+            return np.asarray(pil_img)
+    except Exception:
+        return image
+

@@ -34,15 +34,19 @@ This document tracks technical decisions, numeric constants, and conventions ado
 5. **Data Layout & Sidecar Metadata**:
    - **Decision**: `data/<lang>/<concept>/<signer_id>/<seq_id>.npy` accompanied by `<seq_id>.json` sidecars containing source, signer, and capture timestamps.
 
+6. **Automated Public Clip Discovery & Ingestion**:
+   - **Decision**: `tools/fetch_public_clips.py` queries public dataset indices (WLASL, ASL Citizen, INCLUDE) using a curated synonym dictionary for all 20 canonical concepts, caches matching video clips into `raw_videos/<lang>/<concept>/`, and records matched vs unmatched status in `fetch_report.json`.
+   - **Rationale**: Enables zero-gate training without requiring manual recording before the first model run. Unmatched concepts are reported cleanly without halting.
+
 ---
 
 ## Phase 2: Dataset Assembly, Model Training & Evaluation
 
-6. **Signer Partitioning Strategy**:
+7. **Signer Partitioning Strategy**:
    - **Decision**: Strict split by `signer_id`. Sequences from validation signers never appear in training.
    - **Rationale**: Prevents biometric leakage and memorization of individual signing styles, body proportions, or background artifacts.
 
-7. **Data Augmentations**:
+8. **Data Augmentations**:
    - **Decision**: Five stochastic transformations:
      - Speed/time jitter: `±15%` temporal spline interpolation.
      - Gaussian coordinate noise: `N(0, 0.012)` applied only to active spatial coordinates (visibility and zero-filled hand slots protected).
@@ -50,12 +54,15 @@ This document tracks technical decisions, numeric constants, and conventions ado
      - 2D rotation: `±10°` around mid-shoulder origin.
      - Mirror & Hand swap: Horizontal reflection (`x -> -x`), pose symmetric pairs swapped, and Left Hand slot `[132:195]` swapped with Right Hand slot `[195:258]`.
 
-8. **Multi-Task Objective & Loss Weights**:
+9. **Multi-Task Objective & Loss Weights**:
    - **Decision**: Combined objective: `class_loss + 0.3 * language_loss`.
    - **Rationale**: The secondary language classification head acts as an auxiliary regularizer, encouraging the LSTM recurrent backbone to extract sign-language typology features while preserving primary focus on concept classification.
 
-9. **Model Format & Checkpoints**:
-   - **Decision**: Saved in modern Keras `.keras` zip-container format, preserving custom multi-output topology and optimizer state.
+10. **Model Format & Checkpoints**:
+    - **Decision**: Saved in modern Keras `.keras` zip-container format, preserving custom multi-output topology and optimizer state.
+
+11. **Automated Single-Command Pipeline**:
+    - **Decision**: `run_pipeline.py` orchestrates clip fetching, video conversion, model training, held-out evaluation, and TFLite export in a single command, producing an end-to-end dataset distribution and accuracy summary.
 
 ---
 

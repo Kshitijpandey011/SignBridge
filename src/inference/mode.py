@@ -3,14 +3,13 @@
 Controls classification constraints under three run modes:
 - ISL mode: Masks out all non-ISL classes.
 - ASL mode: Masks out all non-ASL classes.
-- AUTO mode: All 40 classes compete; rolling temporal voting locks onto detected sign language.
+- AUTO mode: Dynamic real-time tracking of ISL vs ASL signs without lockouts.
 """
 
 from __future__ import annotations
 
 from collections import deque
 from typing import List, Optional, Tuple
-
 import numpy as np
 
 
@@ -46,16 +45,16 @@ def apply_language_mask(
 
 
 class InferenceModeManager:
-    """Manages active run mode, temporal language voting, and hysteresis soft-locking."""
+    """Manages active run mode, temporal language voting, and dynamic AUTO tracking."""
 
     def __init__(
         self,
         isl_idx: List[int],
         asl_idx: List[int],
-        history_window: int = 10,
-        lock_threshold: int = 7,
-        unlock_threshold: int = 8,
-        mean_prob_threshold: float = 0.70,
+        history_window: int = 6,
+        lock_threshold: int = 4,
+        unlock_threshold: int = 5,
+        mean_prob_threshold: float = 0.60,
     ) -> None:
         self.isl_idx = isl_idx
         self.asl_idx = asl_idx
@@ -89,26 +88,28 @@ class InferenceModeManager:
             raise ValueError("Override must be 'isl', 'asl', or None")
         self.manual_override = lang.lower() if lang else None
 
-    def update(self, class_probs: np.ndarray, lang_probs: Optional[np.ndarray] = None) -> Tuple[np.ndarray, str, bool]:
+    def update(
+        self, class_probs: np.ndarray, lang_probs: Optional[np.ndarray] = None
+    ) -> Tuple[np.ndarray, str, bool]:
         """Update voting state with new frame probabilities and return effective output.
 
         Args:
-            class_probs: Raw 40-way softmax output from model.
-            lang_probs: Optional 2-way softmax output from secondary head [p_isl, p_asl].
+            class_probs: Raw 40-way softmax output from model / kinematic fusion.
+            lang_probs: Optional 2-way secondary head output.
 
         Returns:
-            Tuple[np.ndarray, str, bool]:
+            Tuple of:
                 - masked_probs: Probabilities adjusted by current language constraints
-                - detected_language: 'isl', 'asl', or 'undetermined'
-                - is_locked: Whether currently soft-locked
+                - detected_language: 'isl' or 'asl'
+                - is_locked: Whether currently strongly locked/consensus
         """
-        # Calculate language probabilities
-        if lang_probs is not None and len(lang_probs) == 2:
-            p_isl = float(lang_probs[0])
-            p_asl = float(lang_probs[1])
-        else:
-            p_isl = float(np.sum(class_probs[self.isl_idx]))
-            p_asl = float(np.sum(class_probs[self.asl_idx]))
+        # Calculate language probabilities directly from class probabilities (which contain kinematic ground-truth)
+        p_isl = float(np.sum(class_probs[self.isl_idx]))
+        p_asl = float(np.sum(class_probs[self.asl_idx]))
+
+        if lang_probs is not None and len(lang_probs) == 2 and np.sum(lang_probs) > 0:
+            p_isl = 0.90 * p_isl + 0.10 * float(lang_probs[0])
+            p_asl = 0.90 * p_asl + 0.10 * float(lang_probs[1])
 
         frame_winner = "isl" if p_isl >= p_asl else "asl"
         self._vote_history.append((frame_winner, p_isl, p_asl))
@@ -117,36 +118,47 @@ class InferenceModeManager:
         effective_mode = self.current_mode
         if self.manual_override:
             effective_mode = self.manual_override
-        elif self.current_mode == "auto":
-            # Process rolling auto-detection logic
-            if len(self._vote_history) >= self.history_window:
-                isl_votes = sum(1 for v, _, _ in self._vote_history if v == "isl")
-                asl_votes = len(self._vote_history) - isl_votes
-                mean_p_isl = sum(p for _, p, _ in self._vote_history) / len(self._vote_history)
-                mean_p_asl = sum(p for _, _, p in self._vote_history) / len(self._vote_history)
+            masked_probs = apply_language_mask(class_probs, effective_mode, self.isl_idx, self.asl_idx)
+            detected_lang = effective_mode
+            is_locked = True
+            return masked_probs, detected_lang, is_locked
 
-                if self.locked_language is None:
-                    # Initial lock rule: >= 7/10 votes AND mean prob > 0.70
-                    if isl_votes >= self.lock_threshold and mean_p_isl >= self.mean_prob_threshold:
-                        self.locked_language = "isl"
-                    elif asl_votes >= self.lock_threshold and mean_p_asl >= self.mean_prob_threshold:
-                        self.locked_language = "asl"
-                elif self.locked_language == "isl":
-                    # Unlock / switch rule: opposite language must win >= 8/10 votes
-                    if asl_votes >= self.unlock_threshold and mean_p_asl >= self.mean_prob_threshold:
-                        self.locked_language = "asl"
-                elif self.locked_language == "asl":
-                    if isl_votes >= self.unlock_threshold and mean_p_isl >= self.mean_prob_threshold:
-                        self.locked_language = "isl"
+        if self.current_mode in ("isl", "asl"):
+            effective_mode = self.current_mode
+            masked_probs = apply_language_mask(class_probs, effective_mode, self.isl_idx, self.asl_idx)
+            detected_lang = effective_mode
+            is_locked = True
+            return masked_probs, detected_lang, is_locked
 
-            if self.locked_language is not None:
-                effective_mode = self.locked_language
+        # AUTO MODE: Dynamic rolling tracking without lockouts
+        isl_votes = sum(1 for v, _, _ in self._vote_history if v == "isl")
+        asl_votes = len(self._vote_history) - isl_votes
+        mean_p_isl = sum(p for _, p, _ in self._vote_history) / max(len(self._vote_history), 1)
+        mean_p_asl = sum(p for _, _, p in self._vote_history) / max(len(self._vote_history), 1)
 
-        # Apply masking according to effective mode
-        masked_probs = apply_language_mask(class_probs, effective_mode, self.isl_idx, self.asl_idx)
-        detected_lang = self.locked_language or ("isl" if p_isl > p_asl else "asl")
-        is_locked = self.locked_language is not None or self.manual_override is not None
+        # Immediate responsive frame tracking: if current frame is distinct, it takes immediate priority
+        if abs(p_isl - p_asl) > 0.40:
+            detected_lang = frame_winner
+        elif isl_votes > asl_votes:
+            detected_lang = "isl"
+        elif asl_votes > isl_votes:
+            detected_lang = "asl"
+        else:
+            detected_lang = frame_winner
 
+        # In AUTO mode, allow both ISL and ASL classes to compete!
+        # Apply a mild prior (1.10x) to the active language without zeroing out the other
+        masked_probs = class_probs.copy()
+        if detected_lang == "isl":
+            masked_probs[self.isl_idx] *= 1.10
+        else:
+            masked_probs[self.asl_idx] *= 1.10
+
+        total = float(np.sum(masked_probs))
+        if total > 0:
+            masked_probs = masked_probs / total
+
+        is_locked = bool(len(self._vote_history) >= 4 and abs(isl_votes - asl_votes) >= 3)
         return masked_probs, detected_lang, is_locked
 
     def reset(self) -> None:
