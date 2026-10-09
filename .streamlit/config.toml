@@ -5,3 +5,7 @@ enableXsrfProtection = false
 enableWebsocketCompression = false
 address = "0.0.0.0"
 port = 8501
+
+[browser]
+gatherUsageStats = false
+serverAddress = "localhost"
